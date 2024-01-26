@@ -25,7 +25,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { SelectScrollable } from "./select-scrollable";
-
+import { DatePickerWithRange } from "./data-range-picker";
 
 
 
@@ -40,6 +40,9 @@ const formSchema = z.object({
   industry: z.string().min(1, {
     message: "Industry required.",
   }),
+  duration: z.string().min(1, {
+    message: "Duration required.",
+  }),
 })
 
 
@@ -50,6 +53,7 @@ export default  function WorkExperienceForm() {
       position: "",
       company: "",
       industry: "",
+      duration: "",
     },
   })
 
@@ -103,6 +107,22 @@ export default  function WorkExperienceForm() {
                 </FormControl>
                 <FormDescription>
                   This is your public display name.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="duration"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Duration</FormLabel>
+                <FormControl>
+                  <DatePickerWithRange/>
+                </FormControl>
+                <FormDescription>
+                  This is the length of time you served in this role.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
