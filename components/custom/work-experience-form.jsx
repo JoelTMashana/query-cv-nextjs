@@ -10,8 +10,6 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-
-
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
@@ -26,7 +24,7 @@ import {
 } from "@/components/ui/form";
 import { SelectScrollable } from "./select-scrollable";
 import { DatePickerWithRange } from "./data-range-picker";
-
+import { Textarea } from "../ui/textarea";
 
 
 
@@ -42,6 +40,9 @@ const formSchema = z.object({
   }),
   duration: z.string().min(1, {
     message: "Duration required.",
+  }),
+  description: z.string().min(20, {
+    message: "Description must be at least 20 characters.",
   }),
 })
 
@@ -120,6 +121,22 @@ export default  function WorkExperienceForm() {
                 <FormLabel>Duration</FormLabel>
                 <FormControl>
                   <DatePickerWithRange/>
+                </FormControl>
+                <FormDescription>
+                  This is the length of time you served in this role.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Textarea  {...field}/>
                 </FormControl>
                 <FormDescription>
                   This is the length of time you served in this role.
