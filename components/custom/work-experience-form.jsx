@@ -70,9 +70,6 @@ export default  function WorkExperienceForm() {
                 <FormControl>
                   <Input placeholder="Software Developer" {...field} />
                 </FormControl>
-                <FormDescription>
-                  This is your public display name.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -86,9 +83,6 @@ export default  function WorkExperienceForm() {
                 <FormControl>
                   <Input placeholder="TechCorp" {...field} />
                 </FormControl>
-                <FormDescription>
-                  This is your public display name.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -102,9 +96,6 @@ export default  function WorkExperienceForm() {
                 <FormControl>
                   <SelectScrollable/>
                 </FormControl>
-                <FormDescription>
-                  This is your public display name.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -118,9 +109,6 @@ export default  function WorkExperienceForm() {
                 <FormControl>
                   <DatePickerWithRange/>
                 </FormControl>
-                <FormDescription>
-                  This is the length of time you served in this role.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -132,11 +120,11 @@ export default  function WorkExperienceForm() {
               <FormItem>
                 <FormLabel>Description</FormLabel>
                 <FormControl>
-                  <Textarea  {...field}/>
+                  <Textarea  
+                    placeholder="Write about your workexperience"
+                    {...field}
+                  />
                 </FormControl>
-                <FormDescription>
-                  This is the length of time you served in this role.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -150,9 +138,6 @@ export default  function WorkExperienceForm() {
                 <FormControl>
                   <MultiSelect items="skills"/>
                 </FormControl>
-                <FormDescription>
-                  This is the length of time you served in this role.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -167,9 +152,6 @@ export default  function WorkExperienceForm() {
                 <FormControl>
                   <MultiSelect items="tools"/>
                 </FormControl>
-                <FormDescription>
-                  This is the length of time you served in this role.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
