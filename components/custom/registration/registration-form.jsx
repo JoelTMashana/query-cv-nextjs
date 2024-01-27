@@ -1,4 +1,5 @@
 "use client"
+import { useState } from 'react';
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -30,6 +31,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { registerUser } from "@/services/registrationsService";
 
 
 
@@ -57,10 +59,16 @@ const RegistrationForm = () => {
         },
       })
     
-      function onSubmit(values) {
-        console.log(values)
-      }
+  const onSubmit = async (data) => {
+    try {
+      const response = await registerUser(data);
+      console.log('Registration successful', response);
+    } catch (error) {
+      console.error('Registration failed', error);
+    }
+  };
     
+
   return (
     <Card className="w-[350px]">
       <CardHeader>
@@ -76,7 +84,9 @@ const RegistrationForm = () => {
               <FormItem>
                 <FormLabel>First name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Your first name" {...field} />
+                  <Input placeholder="Your first name" {...field} 
+                    {...form.register("firstname")}                  
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -89,7 +99,9 @@ const RegistrationForm = () => {
               <FormItem>
                 <FormLabel>Last name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Your last name" {...field} />
+                  <Input placeholder="Your last name" {...field} 
+                   {...form.register("lastname")}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -102,7 +114,9 @@ const RegistrationForm = () => {
               <FormItem>
                 <FormLabel>Email address</FormLabel>
                 <FormControl>
-                  <Input placeholder="example@example.com" {...field} />
+                  <Input placeholder="example@example.com" {...field} 
+                    {...form.register("email")}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -115,7 +129,9 @@ const RegistrationForm = () => {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter password" {...field} />
+                  <Input placeholder="Enter password" {...field} 
+                     {...form.register("password")}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
