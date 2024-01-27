@@ -68,7 +68,7 @@ const RegistrationForm = () => {
     } catch (error) {
       console.error('Registration failed', error);
       if (error.response && error.response.data.detail === "Email already exists.") {
-        setEmailError("This email is already registered. Please use a different email.");
+        setEmailError("This email is already registered.");
       } else {
           console.log('Other error occurred');
       }
