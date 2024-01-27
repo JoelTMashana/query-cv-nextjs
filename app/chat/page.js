@@ -11,7 +11,7 @@ export default function Page() {
         <h1>Chat Page</h1>
         
         <Button asChild>
-          <Link href="/register">Register With Google</Link>
+          <Link href="/register">Next</Link>
         </Button>
         <Button asChild>
           <Link href="/">Logout</Link>
