@@ -49,6 +49,8 @@ const formSchema = z.object({
 
 
 const RegistrationForm = () => {
+  const [emailError, setEmailError] = useState(""); 
+
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -65,6 +67,11 @@ const RegistrationForm = () => {
       console.log('Registration successful', response);
     } catch (error) {
       console.error('Registration failed', error);
+      if (error.response && error.response.data.detail === "Email already exists.") {
+        setEmailError("This email is already registered. Please use a different email.");
+      } else {
+          console.log('Other error occurred');
+      }
     }
   };
     
@@ -117,7 +124,12 @@ const RegistrationForm = () => {
                   <Input placeholder="example@example.com" {...field} 
                     {...form.register("email")}
                   />
+                  {/* Display email error if it exists */}
+                  
                 </FormControl>
+                { emailError && 
+                      <p>{emailError}</p>
+                }
                 <FormMessage />
               </FormItem>
             )}
