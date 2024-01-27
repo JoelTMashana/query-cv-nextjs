@@ -1,14 +1,6 @@
 "use client"
 import { Button } from "@/components/ui/button"
 import Link from "next/link";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -25,7 +17,7 @@ import {
 import { SelectScrollable } from "./select-scrollable";
 import { DatePickerWithRange } from "./data-range-picker";
 import { Textarea } from "../ui/textarea";
-
+import MultiSelect from "./multi-select";
 
 
 const formSchema = z.object({
@@ -44,6 +36,8 @@ const formSchema = z.object({
   description: z.string().min(20, {
     message: "Description must be at least 20 characters.",
   }),
+  skills: z.string(),
+  tools: z.string()
 })
 
 
@@ -55,6 +49,8 @@ export default  function WorkExperienceForm() {
       company: "",
       industry: "",
       duration: "",
+      skills: [],
+      tools: []
     },
   })
 
@@ -137,6 +133,39 @@ export default  function WorkExperienceForm() {
                 <FormLabel>Description</FormLabel>
                 <FormControl>
                   <Textarea  {...field}/>
+                </FormControl>
+                <FormDescription>
+                  This is the length of time you served in this role.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="skills"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Skills</FormLabel>
+                <FormControl>
+                  <MultiSelect items="skills"/>
+                </FormControl>
+                <FormDescription>
+                  This is the length of time you served in this role.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="tools"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Tools</FormLabel>
+                <FormControl>
+                  <MultiSelect items="tools"/>
                 </FormControl>
                 <FormDescription>
                   This is the length of time you served in this role.
