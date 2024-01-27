@@ -18,10 +18,11 @@ const MessageInput = () => {
     <div className="message-input relative w-11/12 md:w-5/6  lg:w-5/12 first-line:gap-2">
       <TextareaAutosize
         placeholder="Type your message here."
-        minRows={3}
+        minRows={2}
+        maxRows={3}
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        className="flex-1 w-full pr-20"
+        className="flex-1 w-full pr-16 border-2 border-gray-300 rounded-md p-2 chat-area"
       />
       <Button onClick={handleSendMessage} className="absolute bottom-4 right-0 mb-1 mr-5"></Button>
     </div>
