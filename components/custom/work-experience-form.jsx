@@ -21,24 +21,19 @@ import MultiSelect from "./multi-select";
 
 
 const formSchema = z.object({
-  position: z.string().min(2, {
-    message: "Position must be at least 2 characters.",
-  }),
-  company: z.string().min(2, {
-    message: "Company must be at least 2 characters.",
-  }),
-  industry: z.string().min(1, {
-    message: "Industry required.",
-  }),
-  duration: z.string().min(1, {
-    message: "Duration required.",
-  }),
-  description: z.string().min(20, {
-    message: "Description must be at least 20 characters.",
-  }),
-  skills: z.string(),
-  tools: z.string()
-})
+  position: z.string()
+    .min(2, "Position must be at least 2 characters."),
+  company: z.string()
+    .min(2, "Company must be at least 2 characters."),
+  industry: z.string()
+    .min(1, "Industry required."),
+  duration: z.string()
+    .min(1, "Duration required."),
+  description: z.string()
+    .min(20, "Description must be at least 20 characters."),
+  skills: z.array(z.string()), 
+  tools: z.array(z.string())
+});
 
 
 export default  function WorkExperienceForm() {
