@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Select,
   SelectContent,
@@ -6,27 +7,46 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 
+const SelectScrollable = () => {
+  const [selectedValue, setSelectedValue] = useState(null);
+  
+  const industryOptions = [
+    { value: "technology", label: "Technology" },
+    { value: "healthcare", label: "Healthcare" },
+    { value: "finance", label: "Finance" },
+    { value: "manufacturing", label: "Manufacturing" },
+    { value: "education", label: "Education" },
+    { value: "retail", label: "Retail" },
+    { value: "hospitality", label: "Hospitality" }
+  ];
+  
+  const handleSelectionChange = (selectedOption) => {
+    setSelectedValue(selectedOption);
+  };
 
-export function SelectScrollable() {
   return (
     <Select>
       <SelectTrigger className="w-[280px]">
-        <SelectValue placeholder="Select an industry" />
+        <SelectValue placeholder="Select an industry" value={selectedValue ? selectedValue.label : ''} />
       </SelectTrigger>
       <SelectContent>
-      <SelectGroup>
+        <SelectGroup>
           <SelectLabel>Industries</SelectLabel>
-          <SelectItem value="technology">Technology</SelectItem>
-          <SelectItem value="healthcare">Healthcare</SelectItem>
-          <SelectItem value="finance">Finance</SelectItem>
-          <SelectItem value="manufacturing">Manufacturing</SelectItem>
-          <SelectItem value="education">Education</SelectItem>
-          <SelectItem value="retail">Retail</SelectItem>
-          <SelectItem value="hospitality">Hospitality</SelectItem>
+          {industryOptions.map((option) => (
+            <SelectItem
+              key={option.value}
+              value={option.value}
+              onSelect={() => handleSelectionChange(option)}
+            >
+              {option.label}
+            </SelectItem>
+          ))}
         </SelectGroup>
       </SelectContent>
     </Select>
-  )
-}
+  );
+};
+
+export default SelectScrollable;

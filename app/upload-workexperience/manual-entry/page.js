@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
+import { ArrowRightIcon } from '@heroicons/react';
 import WorkExperienceForm from "@/components/custom/work-experience-form";
 
 export default function Page() {
@@ -23,6 +23,9 @@ export default function Page() {
             <WorkExperienceForm/>
           </CardContent>
         </Card>
+        <Button asChild>
+          <Link href="/chat" className="m-2">Next</Link>
+        </Button>
       </div>
   );
 }
