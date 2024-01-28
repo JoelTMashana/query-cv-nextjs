@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link";
 import MessageInput from "@/components/custom/chatBox/message-input";
 import ChatArea from "@/components/custom/chatBox/chat-box";
-import requireAuthToken from "@/HOCs/requireAuthToken";
 
 const Page = () => {
   return (
@@ -27,5 +26,5 @@ const Page = () => {
   );
 }
 
-export default requireAuthToken(Page);
+export default Page;
 

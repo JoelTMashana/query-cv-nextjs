@@ -69,15 +69,10 @@ const RegistrationForm = () => {
 
       if (!response) {
         router.push('/register');
+        console.log('No response received, routing user to /register');
         return null;
       }
-
-      const authToken = response.access_token;
-      
-      localStorage.setItem('authToken', authToken);
       console.log('Registration successful', response);
-
-      
       router.push('/chat');
 
     } catch (error) {
