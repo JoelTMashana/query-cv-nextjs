@@ -4,7 +4,7 @@ import Link from "next/link";
 import MessageInput from "@/components/custom/chatBox/message-input";
 import ChatArea from "@/components/custom/chatBox/chat-box";
 
-export default function Page() {
+const Page = () => {
   return (
     <div className="w-full flex flex-col justify-between min-h-screen ">
       <div className="flex flex-col items-center">
@@ -25,4 +25,6 @@ export default function Page() {
     </div>
   );
 }
+
+export default Page;
 
