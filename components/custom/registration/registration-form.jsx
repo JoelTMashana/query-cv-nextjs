@@ -32,6 +32,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { registerUser } from "@/services/registrationsService";
+import { useRouter } from 'next/navigation';
 
 
 
@@ -49,6 +50,7 @@ const formSchema = z.object({
 
 
 const RegistrationForm = () => {
+  const router = useRouter();
   const [emailError, setEmailError] = useState(""); 
 
     const form = useForm({
@@ -64,7 +66,20 @@ const RegistrationForm = () => {
   const onSubmit = async (data) => {
     try {
       const response = await registerUser(data);
+
+      if (!response) {
+        router.push('/register');
+        return null;
+      }
+
+      const authToken = response.access_token;
+      
+      localStorage.setItem('authToken', authToken);
       console.log('Registration successful', response);
+
+      
+      router.push('/chat');
+
     } catch (error) {
       console.error('Registration failed', error);
       if (error.response && error.response.data.detail === "Email already exists.") {
