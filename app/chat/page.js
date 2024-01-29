@@ -1,6 +1,7 @@
 "use client"
 import MessageInput from "@/components/custom/chatBox/message-input";
 import ChatArea from "@/components/custom/chatBox/chat-box";
+import { SheetSide } from "@/components/custom/chatBox/sheet-side";
 
 const Page = () => {
   return (
@@ -10,6 +11,7 @@ const Page = () => {
       </div>
 
       <div className="w-full flex flex-col items-center mb-5"> 
+        <SheetSide/>
         <ChatArea/>
         <MessageInput/>
       </div>
