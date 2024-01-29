@@ -1,12 +1,12 @@
 import create from 'zustand';
 
 const useChatStore = create((set) => ({
+    isLoggedIn: false,
     messages: [],
     promptCount: 0,
     addMessage: (message) => set((state) => {
-      // Increment prompt count if sender is user
 
-      const increment = message.sender === 'user' ? 1 : 0;
+      const increment = message.sender === 'user' && !state.isLoggedIn ? 1 : 0;
       return {
         messages: [...state.messages, message],
         promptCount: state.promptCount + increment

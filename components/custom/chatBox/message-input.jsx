@@ -4,9 +4,13 @@ import { Button } from "@/components/ui/button";
 import TextareaAutosize from 'react-textarea-autosize';
 import { queryGPTPreRegistration } from '@/services/chatService';
 import useChatStore from '@/store/chatStore';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import SingleSignOnLoginModal from '../login/SSO-modal';
 
 
 const MessageInput = () => {
+  const router = useRouter()
   const [message, setMessage] = useState('');
   const addMessage = useChatStore((state) => state.addMessage);
   const promptCount = useChatStore((state) => state.promptCount);
@@ -24,12 +28,13 @@ const MessageInput = () => {
         addMessage({ id: Date.now() + 1, text: response.gpt_response, sender: 'gpt' });
       }
 
-      if (promptCount >= 5) {
-        addMessage({ id: Date.now() + 2, text: "Would you like to register to save your progress?", sender: 'system' });
+      if (promptCount > 2) {
+        // addMessage({ id: Date.now() + 2, text: "Would you like to register to save your progress?", sender: 'system' });
         resetPromptCount();
       }
     }
   };
+  
 
   return (
     <div className="message-input relative w-11/12 md:w-5/6  lg:w-5/12 first-line:gap-2">
@@ -41,7 +46,12 @@ const MessageInput = () => {
         onChange={(e) => setMessage(e.target.value)}
         className="flex-1 w-full pr-16 border-2 border-gray-300 rounded-md p-2 chat-area"
       />
-      <Button onClick={handleSendMessage} className="absolute bottom-4 right-0 mb-1 mr-5">Send</Button>
+      {promptCount !== 2 ?
+        <Button onClick={handleSendMessage} className="absolute bottom-4 right-0 mb-1 mr-5">Send</Button>
+        :
+        <SingleSignOnLoginModal className="absolute bottom-4 right-0 mb-1 mr-5"/>
+      }
+     
     </div>
   );
 };
