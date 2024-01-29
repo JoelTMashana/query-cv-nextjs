@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { ArrowRightIcon } from '@heroicons/react';
-import WorkExperienceForm from "@/components/custom/work-experience/work-experience-form";
+import PreRegistrationWorkExperienceForm from "@/components/custom/work-experience/pre-registration-work-experience-form";
 
 export default function Page() {
   return (
@@ -20,7 +20,7 @@ export default function Page() {
             <CardDescription>Card Description</CardDescription>
           </CardHeader>
           <CardContent>
-            <WorkExperienceForm/>
+            <PreRegistrationWorkExperienceForm/>
           </CardContent>
         </Card>
         <Button asChild>
