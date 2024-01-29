@@ -13,8 +13,12 @@ import {
 } from "@/components/ui/sheet"
 import LogoutButton from "@/components/custom/logout-button";
 import Link from "next/link";
+import useChatStore from "@/store/chatStore";
+
 
 export function SheetSide() {
+  const isLoggedIn = useChatStore((state) => state.isLoggedIn);
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -29,12 +33,13 @@ export function SheetSide() {
         </SheetHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
-          <LogoutButton/>
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
+          { isLoggedIn ?
+            <LogoutButton/>
+            :
             <Button>
                 <Link href="/register">Register</Link>
             </Button>
+          }
           </div>
         </div>
         <SheetFooter>
