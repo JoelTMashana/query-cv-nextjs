@@ -34,7 +34,7 @@ export default function Page() {
       </Card>
 
       <Button asChild className="w-60 mt-4">
-        <Link href="/upload-workexperience/manual-entry">Manual Entry</Link>
+        <Link href="/upload-workexperience/manual-entry/pre-registation">Manual Entry</Link>
       </Button>
       <p className=" mt-4">Or enter manually instead</p>
       </div>
