@@ -14,9 +14,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { DatePickerWithRange } from "../data-range-picker";
 import { Textarea } from "../../ui/textarea";
-
+import { useEffect, useState } from "react";
 
 const formSchema = z.object({
   position: z.string()
@@ -29,6 +28,8 @@ const formSchema = z.object({
 
 
 export default  function PreRegistrationWorkExperienceForm() {
+  const [experienceCount, setExperienceCount] = useState(0);
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -38,9 +39,26 @@ export default  function PreRegistrationWorkExperienceForm() {
     },
   })
 
-  function onSubmit(values) {
-    console.log(values)
-  }
+  useEffect(() => {
+    const currentExperiences = JSON.parse(sessionStorage.getItem('workExperiences')) || [];
+    setExperienceCount(currentExperiences.length);
+  })
+
+  const onSubmit = (values) => {
+    const currentExperiences = JSON.parse(sessionStorage.getItem('workExperiences')) || [];
+    
+    const newExperiences = [...currentExperiences, values];
+    
+    sessionStorage.setItem('workExperiences', JSON.stringify(newExperiences));
+    
+    setExperienceCount(newExperiences.length);
+    
+    console.log('New experience added. Updated experiences:', newExperiences);
+    form.reset({
+        ...values,
+        description: ""
+    });
+  };
 
   return (
       <Form {...form}>
@@ -87,7 +105,18 @@ export default  function PreRegistrationWorkExperienceForm() {
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <Button type="submit">Add Experience</Button>
+          
+          <Button 
+            type="button" 
+            disabled={experienceCount < 3}
+          >
+            <Link href="/chat">Chat</Link>
+          </Button>
+          
+          {experienceCount < 3 && (
+            <p>You need to add at least 3 experiences to proceed.</p>
+          )}
         </form>
       </Form>
   );
