@@ -1,14 +1,10 @@
-import { Button } from "@/components/ui/button"
-import Link from "next/link";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { ArrowRightIcon } from '@heroicons/react';
 import PreRegistrationWorkExperienceForm from "@/components/custom/work-experience/pre-registration-work-experience-form";
 
 export default function Page() {

@@ -4,11 +4,9 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { ArrowRightIcon } from '@heroicons/react';
 import WorkExperienceForm from "@/components/custom/work-experience/work-experience-form";
 
 export default function Page() {
