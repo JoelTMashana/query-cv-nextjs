@@ -24,6 +24,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useRouter } from 'next/navigation';
+import { loginUser } from '@/services/authenticationService';
 
 
 
@@ -48,77 +49,75 @@ const LoginForm = () => {
         },
       })
     
-  const onSubmit = async (data) => {
-    try {
-    //   const response = await registerUser(data);
+      const onSubmit = async (data) => {
+        try {
+          const response = await loginUser(data.email, data.password);
+    
+          if (!response) return null;
+    
+          console.log('Login successful', response);
 
-      if (!response) return null;
-  
-      console.log('Login successful', response);
-      router.push('/chat');
-
-    } catch (error) {
-      console.error('Login failed', error);
-      if (error.response && error.response.data.detail === "Email already exists.") {
-        setEmailError("This email is not registered.");
-      } else {
-          console.log('Other error occurred');
-      }
-    }
-  };
+    
+          router.push('/chat'); 
+    
+        } catch (error) {
+          console.error('Login failed', error);
+          if (error.response && error.response.data.detail) {
+            setEmailError(error.response.data.detail);  
+          } else {
+            console.log('Other error occurred');
+          }
+        }
+      };
     
 
-  return (
-    <Card className="w-[350px]">
-      <CardHeader>
-        <CardTitle>Login</CardTitle>
-        <CardDescription>Description</CardDescription>
-      </CardHeader>
-      <CardContent><Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email address</FormLabel>
-                <FormControl>
-                  <Input placeholder="example@example.com" {...field} 
-                    {...form.register("email")}
-                  />
-                  {/* Display email error if it exists */}
-                  
-                </FormControl>
-                { emailError && 
-                      <p>{emailError}</p>
-                }
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter password" {...field} 
-                     {...form.register("password")}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div  className="w-full flex justify-center items-center">
-            <Button type="submit" >Submit</Button>
-          </div>     
-        </form>
-      </Form>
-      </CardContent>
-    </Card>
-  )
+      return (
+        <Card className="w-[350px]">
+          <CardHeader>
+            <CardTitle>Login</CardTitle>
+            <CardDescription>Description</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                {/* Form fields for email and password */}
+                {/* Email Field */}
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email address</FormLabel>
+                      <FormControl>
+                        <Input placeholder="example@example.com" {...field} {...form.register("email")} />
+                      </FormControl>
+                      {emailError && <p>{emailError}</p>} 
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                {/* Password Field */}
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Password</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter password" type="password" {...field} {...form.register("password")} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <div className="w-full flex justify-center items-center">
+                  <Button type="submit">Login</Button>
+                </div>
+              </form>
+            </Form>
+          </CardContent>
+        </Card>
+      );
 }
 
 export default LoginForm;
