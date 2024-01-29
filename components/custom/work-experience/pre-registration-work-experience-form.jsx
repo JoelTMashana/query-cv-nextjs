@@ -23,8 +23,6 @@ const formSchema = z.object({
     .min(2, "Position must be at least 2 characters."),
   company: z.string()
     .min(2, "Company must be at least 2 characters."),
-  duration: z.string()
-    .min(1, "Duration required."),
   description: z.string()
     .min(20, "Description must be at least 20 characters.")
 });
@@ -36,7 +34,7 @@ export default  function PreRegistrationWorkExperienceForm() {
     defaultValues: {
       position: "",
       company: "",
-      duration: ""
+      description: ""
     },
   })
 
@@ -68,19 +66,6 @@ export default  function PreRegistrationWorkExperienceForm() {
                 <FormLabel>Company</FormLabel>
                 <FormControl>
                   <Input placeholder="TechCorp" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="duration"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Duration</FormLabel>
-                <FormControl>
-                  <DatePickerWithRange/>
                 </FormControl>
                 <FormMessage />
               </FormItem>
