@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "../../ui/textarea";
 import { useEffect, useState } from "react";
+import { getTemporaryAccessTokenForUnregisteredUser } from "@/services/authenticationService";
 
 const formSchema = z.object({
   position: z.string()
@@ -50,7 +51,6 @@ export default  function PreRegistrationWorkExperienceForm() {
     const newExperiences = [...currentExperiences, values];
     
     sessionStorage.setItem('workExperiences', JSON.stringify(newExperiences));
-    
     setExperienceCount(newExperiences.length);
     
     console.log('New experience added. Updated experiences:', newExperiences);
@@ -58,6 +58,11 @@ export default  function PreRegistrationWorkExperienceForm() {
         ...values,
         description: ""
     });
+  };
+
+  const hadleTokenGenerationClick = () => {
+    console.log("Button clicked!");
+    const response = getTemporaryAccessTokenForUnregisteredUser();
   };
 
   return (
@@ -105,17 +110,20 @@ export default  function PreRegistrationWorkExperienceForm() {
               </FormItem>
             )}
           />
-          <Button type="submit">Add Experience</Button>
+          <Button type="submit"
+            disabled={experienceCount > 5}
+          >Add Achievement</Button>
           
           <Button 
             type="button" 
             disabled={experienceCount < 3}
+            onClick={hadleTokenGenerationClick}
           >
-            <Link href="/chat">Chat</Link>
+            Chat
           </Button>
           
           {experienceCount < 3 && (
-            <p>You need to add at least 3 experiences to proceed.</p>
+            <p>You need to add at least 3 achievements to proceed.</p>
           )}
         </form>
       </Form>

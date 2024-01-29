@@ -15,7 +15,6 @@ async function loginUser(email, password) {
 }
 
 async function logoutUser() {
-    console.log('logoutuser called')
     try {
         const response = await axios.post('http://localhost:8000/api/v1/logout', {}, {
             withCredentials: true,  
@@ -27,4 +26,21 @@ async function logoutUser() {
     }
 }
 
-export { loginUser, logoutUser };
+async function getTemporaryAccessTokenForUnregisteredUser () {
+    try {
+        const response = await axios.post('http://localhost:8000/api/v1/users/temporary-token', {}, {
+            withCredentials: true,  
+        });
+        console.log(response.data);
+        if (response.data) {
+            window.location.href = '/chat'; 
+        } else {
+            console.error('An error occured');
+        }
+    } catch (error) {
+        console.error('An error occured:', error);
+    }
+}
+
+
+export { loginUser, logoutUser, getTemporaryAccessTokenForUnregisteredUser };
