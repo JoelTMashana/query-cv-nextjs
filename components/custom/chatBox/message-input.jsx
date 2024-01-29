@@ -3,19 +3,22 @@ import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import TextareaAutosize from 'react-textarea-autosize';
 import { queryGPTPreRegistration } from '@/services/chatService';
+import useChatStore from '@/store/chatStore';
+
 
 const MessageInput = () => {
   const [message, setMessage] = useState('');
+  const addMessage = useChatStore((state) => state.addMessage);
 
   const handleSendMessage = async () => {
     if (message.trim()) {
       console.log(message);
+      addMessage({ id: Date.now(), text: message.trim(), sender: 'user' });
       setMessage(''); 
-      try {
-        const response = await queryGPTPreRegistration(message.trim());
-        console.log(response);
-      } catch (error) {
-        console.error('An error occurred:', error);
+      const response = await queryGPTPreRegistration(message);
+      console.log(response);
+      if (response && response.gpt_response) {
+        addMessage({ id: Date.now() + 1, text: response.gpt_response, sender: 'gpt' });
       }
     }
   };
