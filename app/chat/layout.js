@@ -2,7 +2,7 @@ import Link from "next/link";
 import LogoutButton from "@/components/custom/logout-button";
 import { Button } from "@/components/ui/button";
 
-const Layout = ({ children, modal }) => {
+const Layout = ({ children }) => {
   return (
     <div className="chat-container">
         <Button asChild>
