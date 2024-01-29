@@ -9,6 +9,9 @@ import useChatStore from '@/store/chatStore';
 const MessageInput = () => {
   const [message, setMessage] = useState('');
   const addMessage = useChatStore((state) => state.addMessage);
+  const promptCount = useChatStore((state) => state.promptCount);
+  const resetPromptCount = useChatStore((state) => state.resetPromptCount);
+
 
   const handleSendMessage = async () => {
     if (message.trim()) {
@@ -19,6 +22,11 @@ const MessageInput = () => {
       console.log(response);
       if (response && response.gpt_response) {
         addMessage({ id: Date.now() + 1, text: response.gpt_response, sender: 'gpt' });
+      }
+
+      if (promptCount >= 5) {
+        addMessage({ id: Date.now() + 2, text: "Would you like to register to save your progress?", sender: 'system' });
+        resetPromptCount();
       }
     }
   };
