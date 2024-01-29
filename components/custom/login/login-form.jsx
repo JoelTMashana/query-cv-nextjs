@@ -57,9 +57,12 @@ const LoginForm = () => {
     
           console.log('Login successful', response);
 
-    
-          router.push('/chat'); 
-    
+          if (response === 'User logged in succesfully.') {
+            router.push('/chat'); 
+          } else {
+            console.log('Some thing went wront');
+          }
+         
         } catch (error) {
           console.error('Login failed', error);
           if (error.response && error.response.data.detail) {

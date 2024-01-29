@@ -15,14 +15,22 @@ const MessageInput = () => {
   const addMessage = useChatStore((state) => state.addMessage);
   const promptCount = useChatStore((state) => state.promptCount);
   const resetPromptCount = useChatStore((state) => state.resetPromptCount);
-
+  const isLoggedIn = useChatStore((state) => state.isLoggedIn);
 
   const handleSendMessage = async () => {
     if (message.trim()) {
       console.log(message);
       addMessage({ id: Date.now(), text: message.trim(), sender: 'user' });
       setMessage(''); 
-      const response = await queryGPTPreRegistration(message);
+
+      let response;
+      console.log('is logged in: ', isLoggedIn);
+      if (isLoggedIn) {
+        console.log('User is logged in so would call the other function');
+      } else {
+        response = await queryGPTPreRegistration(message);
+      }
+
       console.log(response);
       if (response && response.gpt_response) {
         addMessage({ id: Date.now() + 1, text: response.gpt_response, sender: 'gpt' });
