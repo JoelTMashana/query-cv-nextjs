@@ -13,6 +13,9 @@ const useChatStore = create((set) => ({
       };
     }),
     resetPromptCount: () => set(() => ({ promptCount: 0 })), // Reset prompt count to 0
+    loginUser: () => set({ isLoggedIn: true, promptCount: 0 }), 
+    logoutUser: () => set({ isLoggedIn: false, promptCount: 0 }), 
+
   }));
   
   export default useChatStore;

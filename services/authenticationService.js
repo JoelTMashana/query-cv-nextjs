@@ -1,13 +1,15 @@
 import axios from "axios";
-
+import useChatStore from "@/store/chatStore";
 
 async function loginUser(email, password) {
+    
     try {
         const response = await axios.post('http://localhost:8000/api/v1/login', { email, password }, {
             withCredentials: true,  
         });
 
         console.log(response.data);
+        useChatStore.getState().loginUser();
         return response.data
     } catch (error) {
         console.error('Login failed:', error);
@@ -19,6 +21,7 @@ async function logoutUser() {
         const response = await axios.post('http://localhost:8000/api/v1/logout', {}, {
             withCredentials: true,  
         });
+        useChatStore.getState().logoutUser();
         window.location.href = '/login'; 
         console.log(response.data);
     } catch (error) {
