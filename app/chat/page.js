@@ -12,9 +12,7 @@ const Page = () => {
       <div className="absolute flex flex-col  top-4 right-4">
         <SheetSide/>
       </div>
-    
       <div className="w-full flex flex-col items-center mb-5"> 
-       
         <ChatArea/>
         <MessageInput/>
       </div>
