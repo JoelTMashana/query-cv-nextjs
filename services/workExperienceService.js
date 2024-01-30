@@ -23,10 +23,10 @@ async function getSkills() {
 
 async function getTools() {
   try {
-    const response = await axios.get(`${API_BASE_URL}/tools`, {
-      withCredentials: true, 
-    });
-
+    // const response = await axios.get(`${API_BASE_URL}/tools`, {
+    //   withCredentials: true, 
+    // });
+    const response = await axios.get('/tools')
     console.log(response.data);
     return response.data.map(tool => ({
       value: tool.tool_id,
@@ -48,9 +48,7 @@ async function handleWorkExperienceSubmission(formData) {
     const { position, company, industry, duration, description, outcomes } = formData;
     const experienceData = { position, company, industry, duration, description, outcomes };
 
-    const experienceResponse = await axios.post(`${API_BASE_URL}/users/${userId}/experiences`, experienceData, {
-      withCredentials: true, 
-    });
+    const experienceResponse = await axios.post(`/users/${userId}/experiences`, experienceData);
 
     const experienceId = experienceResponse.data.experience_id;
 
@@ -68,31 +66,23 @@ async function handleWorkExperienceSubmission(formData) {
 // Helper function to create and link skills
 async function linkSkillsToExperience(skills, experienceId) {
   if (skills && skills.length > 0) {
-    const response = await axios.post(`${API_BASE_URL}/experiences/${experienceId}/skills`, { skill_ids: skills }, {
-      withCredentials: true, 
-    });
+    const response = await axios.post(`/experiences/${experienceId}/skills`, { skill_ids: skills });
   }
 }
 
 
 async function linkToolstoExperience(tools, experienceId) {
   if (tools && tools.length > 0) {
-    await axios.post(`${API_BASE_URL}/experiences/${experienceId}/tools`, { tool_ids: tools }, {
-      withCredentials: true, 
-    });
+    await axios.post(`/experiences/${experienceId}/tools`, { tool_ids: tools });
   }
 }
 
 async function linkSkillsAndToolsToUser(userId, skillIds, toolIds) {
   if (skillIds.length > 0) {
-    await axios.post(`${API_BASE_URL}/users/${userId}/skills`, { skill_ids: skillIds }, {
-      withCredentials: true, 
-    });
+    await axios.post(`/users/${userId}/skills`, { skill_ids: skillIds });
   }
   if (toolIds.length > 0) {
-    await axios.post(`${API_BASE_URL}/users/${userId}/tools`, { tool_ids: toolIds }, {
-      withCredentials: true, 
-    });
+    await axios.post(`/users/${userId}/tools`, { tool_ids: toolIds });
   }
 }
 
