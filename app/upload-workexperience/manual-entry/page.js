@@ -22,7 +22,7 @@ export default function Page() {
           </CardContent>
         </Card>
         <Button asChild>
-          <Link href="/chat" className="m-2">Next</Link>
+          <Link href="/chat" className="m-2">Chat</Link>
         </Button>
       </div>
   );

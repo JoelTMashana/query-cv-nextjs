@@ -9,7 +9,8 @@ async function loginUser(email, password) {
         });
 
         console.log(response.data);
-        useChatStore.getState().loginUser();
+        const userDetails = response.data.user;
+        useChatStore.getState().loginUser(userDetails);
         return response.data
     } catch (error) {
         console.error('Login failed:', error);

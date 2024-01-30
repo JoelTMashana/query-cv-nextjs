@@ -1,6 +1,4 @@
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import {
   Sheet,
   SheetClose,
@@ -17,7 +15,7 @@ import useChatStore from "@/store/chatStore";
 
 
 export function SheetSide() {
-  const isLoggedIn = useChatStore((state) => state.isLoggedIn);
+  const { isLoggedIn, user } = useChatStore(); // Destructto get isLoggedIn and user
 
   return (
     <Sheet>
@@ -26,30 +24,25 @@ export function SheetSide() {
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>Manage profile</SheetTitle>
-          <SheetDescription>
-            Make changes to your profile here. Click save when you're done.
-          </SheetDescription>
+          {/* Conditionally render the title based on user's name or fallback to a default title */}
+          <SheetTitle>{isLoggedIn && user ? `${user.firstname} ${user.lastname}` : "Manage Profile"}</SheetTitle>
         </SheetHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
-          { isLoggedIn ?
-            <>
-              <Button>
-                <Link href="/upload-workexperience/manual-entry">Add</Link>
+            { isLoggedIn ?
+              <>
+                <Button asChild>
+                  <Link href="/upload-workexperience/manual-entry">Add</Link>
+                </Button>
+                <LogoutButton/>
+              </>
+              :
+              <Button asChild>
+                  <Link href="/register">Register</Link>
               </Button>
-              <LogoutButton/>
-            </>
-            :
-            <Button>
-                <Link href="/register">Register</Link>
-            </Button>
-          }
+            }
           </div>
         </div>
-        <SheetFooter>
-
-        </SheetFooter>
       </SheetContent>
     </Sheet>
   )
