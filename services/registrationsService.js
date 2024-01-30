@@ -1,10 +1,8 @@
-import axios from 'axios';
+import axios from '@/lib/utils/axiosConfig';
 
 const registerUser = async (userData) => {
   try {
-    const response = await axios.post('http://localhost:8000/api/v1/users/register_user', userData, {
-      withCredentials: true,  
-    });
+    const response = await axios.post('/users/register_user', userData);
     console.log('Registration successful', response.data);
     return response.data;
   } catch (error) {

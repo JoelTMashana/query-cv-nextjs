@@ -2,13 +2,8 @@ import axios from '@/lib/utils/axiosConfig';
 import useSelectionStore from '@/store/useSelectionStore';
 import useChatStore from '@/store/chatStore';
 
-const API_BASE_URL = 'http://localhost:8000/api/v1';
-
 async function getSkills() {
   try {
-    // const response = await axios.get(`${API_BASE_URL}/skills`, {
-    //   withCredentials: true, 
-    // });
     const response = await axios.get('/skills')
     console.log(response.data);
     return response.data.map(skill => ({
@@ -23,9 +18,6 @@ async function getSkills() {
 
 async function getTools() {
   try {
-    // const response = await axios.get(`${API_BASE_URL}/tools`, {
-    //   withCredentials: true, 
-    // });
     const response = await axios.get('/tools')
     console.log(response.data);
     return response.data.map(tool => ({
