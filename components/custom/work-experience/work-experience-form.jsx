@@ -27,11 +27,11 @@ const MultiSelectNoSSR = dynamic(() => import('../multi-select'), {
 
 const formSchema = z.object({
   position: z.string()
-    .min(2, "Position must be at least 2 characters."),
+    .min(2, "Position must be at least 3 characters."),
   company: z.string()
     .min(2, "Company must be at least 2 characters."),
   industry: z.string()
-    .min(1, "Industry required."),
+    .min(2, "Industry must be at least 4 characters."),
   duration: z.string()
     .min(1, "Duration required."),
   description: z.string()
@@ -94,12 +94,25 @@ export default  function WorkExperienceForm() {
               <FormItem>
                 <FormLabel>Industry</FormLabel>
                 <FormControl>
-                  <SelectScrollable/>
+                  <Input placeholder="HealthTech" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+          {/* <FormField
+            control={form.control}
+            name="industry"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Industry</FormLabel>
+                <FormControl>
+                  <SelectScrollable/>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          /> */}
           <FormField
             control={form.control}
             name="duration"
