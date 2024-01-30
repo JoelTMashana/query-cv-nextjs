@@ -12,10 +12,8 @@ import {
 import Link from "next/link";
 
 export default function Page() {
-  // Set up the drop zone
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (acceptedFiles) => {
-      // Handle file upload here
       console.log(acceptedFiles);
     },
   });
