@@ -17,7 +17,12 @@ import {
 import  SelectScrollable  from "../select-scrollable";
 import { DatePickerWithRange } from "../data-range-picker";
 import { Textarea } from "../../ui/textarea";
-import MultiSelect from "../multi-select";
+import dynamic from 'next/dynamic';
+
+
+const MultiSelectNoSSR = dynamic(() => import('../multi-select'), {
+  ssr: false, // Disable SSR
+});
 
 
 const formSchema = z.object({
@@ -131,7 +136,7 @@ export default  function WorkExperienceForm() {
               <FormItem>
                 <FormLabel>Skills</FormLabel>
                 <FormControl>
-                  <MultiSelect items="skills"/>
+                  <MultiSelectNoSSR items="skills"/>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -145,7 +150,7 @@ export default  function WorkExperienceForm() {
               <FormItem>
                 <FormLabel>Tools</FormLabel>
                 <FormControl>
-                  <MultiSelect items="tools"/>
+                  <MultiSelectNoSSR items="tools"/>
                 </FormControl>
                 <FormMessage />
               </FormItem>

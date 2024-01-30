@@ -16,6 +16,7 @@ const MultiSelect = ({ items }) => {
 
     const handleChange = (selectedOptions) => {
         setSelectedOptions(selectedOptions);
+        console.log('Selected: ', selectedOptions)
     };
 
     return (
