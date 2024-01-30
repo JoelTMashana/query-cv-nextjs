@@ -32,14 +32,9 @@ const MessageInput = () => {
       }
 
       console.log(response);
-      if (response && response.gpt_response) {
-        addMessage({ id: Date.now() + 1, text: response.gpt_response, sender: 'gpt' });
-      }
-
-      if (promptCount > 2) {
-        // addMessage({ id: Date.now() + 2, text: "Would you like to register to save your progress?", sender: 'system' });
-        resetPromptCount();
-      }
+      if (response && response.gpt_response) addMessage({ id: Date.now() + 1, text: response.gpt_response, sender: 'gpt' });
+ 
+      if (promptCount > 2) resetPromptCount();
     }
   };
   
@@ -54,7 +49,7 @@ const MessageInput = () => {
         onChange={(e) => setMessage(e.target.value)}
         className="flex-1 w-full pr-16 border-2 border-gray-300 rounded-md p-2 chat-area"
       />
-      {promptCount !== 2 ?
+      {promptCount !== 5 ?
         <Button onClick={handleSendMessage} className="absolute bottom-4 right-0 mb-1 mr-5">Send</Button>
         :
         <SingleSignOnLoginModal className="absolute bottom-4 right-0 mb-1 mr-5"/>

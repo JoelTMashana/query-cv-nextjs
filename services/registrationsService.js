@@ -10,7 +10,6 @@ const registerUser = async (userData) => {
     return response.data;
   } catch (error) {
     console.error('Registration error:', error.response);
-    throw error;
   }
 };
 
