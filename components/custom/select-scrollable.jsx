@@ -11,7 +11,6 @@ import {
 
 const SelectScrollable = () => {
   const [selectedValue, setSelectedValue] = useState(null);
-  
   const industryOptions = [
     { value: "technology", label: "Technology" },
     { value: "healthcare", label: "Healthcare" },

@@ -1,39 +1,49 @@
-"use client"
-import { useState } from "react"
+import { useState, useEffect } from "react";
 import Select from 'react-select';
+import { getSkills, getTools } from "@/services/workExperienceService";
+import useSelectionStore from "@/store/useSelectionStore";
 
 
 const MultiSelect = ({ items }) => {
-    const [selectedSkills, setSelectedSkills] = useState([]);
-
-    const toolOptions = [
-        {value: "react", label: "React"},
-        {value: "nodejs", label: "Node.js"},
-        {value: "css", label: "CSS"},
-        {value: "javascript", label: "JavaScript"}
-    ]
-    const skillOptions = [
-        {value: "communication", label: "Communication"},
-        {value: "teamwork", label: "Teamwork"},
-        {value: "stakeholder_engagement", label: "Stakeholder Engagement"},
-        {value: "project_planning", label: "Project Planning"}
-    ]
+    const [options, setOptions] = useState([]);
+    const [selectedOptions, setSelectedOptions] = useState([]);
+    const { setSelectedSkills, setSelectedTools } = useSelectionStore();
 
 
-    const handleSkillChange = (selectedOptions) => {
-        setSelectedSkills(selectedOptions);
+    useEffect(() => {
+        const fetchData = async () => {
+            const data = items === "skills" ? await getSkills() : await getTools();
+            setOptions(data);
+        };
+        fetchData();
+    }, [items]);
+
+    const handleChange = (selectedOptions) => {
+        setSelectedOptions(selectedOptions);
+        console.log('Selected: ', selectedOptions)
+        const selectedValues = selectedOptions ? selectedOptions.map(option => option.value) : [];
+        
+        // Update store based on 'items' prop
+        if (items === "skills") {
+            setSelectedSkills(selectedValues);
+            console.log('Selected for store: ', setSelectedSkills)
+        } else {
+            setSelectedTools(selectedValues);
+            console.log('Selected for store: ', setSelectedTools)
+        }
+      
     };
 
     return (
         <Select
             isMulti
-            options={items === "skills" ? skillOptions : toolOptions}
-            value={selectedSkills}
-            onChange={handleSkillChange}
+            options={options}
+            value={selectedOptions}
+            onChange={handleChange}
             className="basic-multi-select"
             classNamePrefix="select"
         />
-    )
-}
+    );
+};
 
 export default MultiSelect;

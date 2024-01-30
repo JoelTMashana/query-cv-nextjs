@@ -17,7 +17,13 @@ import {
 import  SelectScrollable  from "../select-scrollable";
 import { DatePickerWithRange } from "../data-range-picker";
 import { Textarea } from "../../ui/textarea";
-import MultiSelect from "../multi-select";
+import dynamic from 'next/dynamic';
+import { handleWorkExperienceSubmission } from "@/services/workExperienceService";
+
+
+const MultiSelectNoSSR = dynamic(() => import('../multi-select'), {
+  ssr: false, // Disable SSR
+});
 
 
 const formSchema = z.object({
@@ -27,10 +33,11 @@ const formSchema = z.object({
     .min(2, "Company must be at least 2 characters."),
   industry: z.string()
     .min(1, "Industry required."),
-  duration: z.string()
-    .min(1, "Duration required."),
+  duration: z.string(),
   description: z.string()
     .min(20, "Description must be at least 20 characters."),
+  outcomes: z.string()
+    .min(20, "Outcomes must be at least 20 characters."),
   skills: z.array(z.string()), 
   tools: z.array(z.string())
 });
@@ -44,13 +51,16 @@ export default  function WorkExperienceForm() {
       company: "",
       industry: "",
       duration: "",
+      description: "",
+      outcomes: "",
       skills: [],
       tools: []
     },
   })
 
   function onSubmit(values) {
-    console.log(values)
+    console.log(values);
+    handleWorkExperienceSubmission(values);
   }
 
   return (
@@ -89,12 +99,25 @@ export default  function WorkExperienceForm() {
               <FormItem>
                 <FormLabel>Industry</FormLabel>
                 <FormControl>
-                  <SelectScrollable/>
+                  <Input placeholder="TechCorp" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+          {/* <FormField
+            control={form.control}
+            name="industry"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Industry</FormLabel>
+                <FormControl>
+                  <SelectScrollable {...field}/>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          /> */}
           <FormField
             control={form.control}
             name="duration"
@@ -102,7 +125,8 @@ export default  function WorkExperienceForm() {
               <FormItem>
                 <FormLabel>Duration</FormLabel>
                 <FormControl>
-                  <DatePickerWithRange/>
+                  <DatePickerWithRange  {...field}/>
+                  {/* <Input placeholder="01/01/2020 - 01/01/2023" {...field} /> */}
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -126,12 +150,28 @@ export default  function WorkExperienceForm() {
           />
           <FormField
             control={form.control}
+            name="outcomes"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Outcomes</FormLabel>
+                <FormControl>
+                  <Textarea  
+                    placeholder="Write about the outcomes"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
             name="skills"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Skills</FormLabel>
                 <FormControl>
-                  <MultiSelect items="skills"/>
+                  <MultiSelectNoSSR {...field} items="skills"/>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -145,7 +185,7 @@ export default  function WorkExperienceForm() {
               <FormItem>
                 <FormLabel>Tools</FormLabel>
                 <FormControl>
-                  <MultiSelect items="tools"/>
+                  <MultiSelectNoSSR {...field} items="tools"/>
                 </FormControl>
                 <FormMessage />
               </FormItem>
