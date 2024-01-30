@@ -33,8 +33,7 @@ const formSchema = z.object({
     .min(2, "Company must be at least 2 characters."),
   industry: z.string()
     .min(1, "Industry required."),
-  duration: z.string()
-    .min(1, "Duration required."),
+  duration: z.string(),
   description: z.string()
     .min(20, "Description must be at least 20 characters."),
   outcomes: z.string()
@@ -126,8 +125,8 @@ export default  function WorkExperienceForm() {
               <FormItem>
                 <FormLabel>Duration</FormLabel>
                 <FormControl>
-                  {/* <DatePickerWithRange/> */}
-                  <Input placeholder="01/01/2020 - 01/01/2023" {...field} />
+                  <DatePickerWithRange  {...field}/>
+                  {/* <Input placeholder="01/01/2020 - 01/01/2023" {...field} /> */}
                 </FormControl>
                 <FormMessage />
               </FormItem>

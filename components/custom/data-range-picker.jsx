@@ -16,14 +16,30 @@ import {
 
 export function DatePickerWithRange({
   className,
+  onChange,value,
+  ...rest
 }) {
   const [date, setDate] = React.useState({
     from: new Date(2022, 0, 20),
     to: addDays(new Date(2022, 0, 20), 20),
+    
   })
 
+  const handleSelect = (newDateRange) => {
+    setDate(newDateRange);
+    console.log('Datarange ')
+    if (newDateRange.from && newDateRange.to) {
+      // Format 
+      const formattedDuration = `${format(newDateRange.from, 'MMM dd yyyy')} - ${format(newDateRange.to, 'MMM dd yyyy')}`;
+      
+      onChange(formattedDuration);
+    } else {
+      onChange('');
+    }
+  };
+
   return (
-    <div className={cn("grid gap-2", className)}>
+    <div className={cn("grid gap-2", className)} {...rest}>
       <Popover>
         <PopoverTrigger asChild>
           <Button
@@ -55,7 +71,7 @@ export function DatePickerWithRange({
             mode="range"
             defaultMonth={date?.from}
             selected={date}
-            onSelect={setDate}
+            onSelect={handleSelect}
             numberOfMonths={2}
           />
         </PopoverContent>
