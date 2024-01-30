@@ -1,12 +1,10 @@
-import axios from "axios";
+import axios from "@/lib/utils/axiosConfig";
 import useChatStore from "@/store/chatStore";
 
 async function loginUser(email, password) {
     
     try {
-        const response = await axios.post('http://localhost:8000/api/v1/login', { email, password }, {
-            withCredentials: true,  
-        });
+        const response = await axios.post('/login', { email, password });
 
         console.log(response.data);
         const userDetails = response.data.user;
@@ -19,9 +17,7 @@ async function loginUser(email, password) {
 
 async function logoutUser() {
     try {
-        const response = await axios.post('http://localhost:8000/api/v1/logout', {}, {
-            withCredentials: true,  
-        });
+        const response = await axios.post('/logout', {});
         useChatStore.getState().logoutUser();
         window.location.href = '/login'; 
         console.log(response.data);
@@ -32,9 +28,7 @@ async function logoutUser() {
 
 async function getTemporaryAccessTokenForUnregisteredUser () {
     try {
-        const response = await axios.post('http://localhost:8000/api/v1/users/temporary-token', {}, {
-            withCredentials: true,  
-        });
+        const response = await axios.post('/users/temporary-token', {});
         console.log(response.data);
         if (response.data) {
             window.location.href = '/chat'; 
