@@ -153,6 +153,7 @@ const RegistrationForm = () => {
                 <FormControl>
                   <Input placeholder="Enter password" {...field} 
                      {...form.register("password")}
+                     type="password"
                   />
                 </FormControl>
                 <FormMessage />
