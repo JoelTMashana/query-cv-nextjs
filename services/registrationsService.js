@@ -4,7 +4,8 @@ import useChatStore from '@/store/chatStore';
 const registerUser = async (userData) => {
   try {
     const response = await axios.post('/users/register_user', userData);
-    const userDetails = response.data.user;
+    const userDetails = response.data.user_details;
+    console.log('User details var on reg: ', userDetails);
     useChatStore.getState().loginUser(userDetails);
     console.log('Registration successful', response.data);
     return response.data;

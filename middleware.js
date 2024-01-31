@@ -7,9 +7,12 @@ export async function middleware(request) {
 
     const tokenExists = checkToken(token);
 
-    if (!tokenExists && request.nextUrl.pathname.startsWith('/chat')) {
-        return NextResponse.redirect(new URL('/login', request.url));
+    if (!tokenExists && (request.nextUrl.pathname.startsWith('/chat') ||
+         request.nextUrl.pathname === '/upload-workexperience/manual-entry')) {
+            return NextResponse.redirect(new URL('/login', request.url));
     }
+
+
 
     return NextResponse.next();
 }

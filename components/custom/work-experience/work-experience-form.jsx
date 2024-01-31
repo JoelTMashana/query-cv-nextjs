@@ -58,9 +58,21 @@ export default  function WorkExperienceForm() {
     },
   })
 
+  const { reset } = form;
+
   function onSubmit(values) {
     console.log(values);
-    handleWorkExperienceSubmission(values);
+    handleWorkExperienceSubmission(values).then(() => {
+      reset({
+        position: values.position,
+        company: values.company,
+        industry: values.industry, 
+        duration: values.duration, 
+        outcomes: "",
+      });
+    }).catch((error) => {
+      console.error('Submission or reset failed:', error);
+    });
   }
 
   return (
