@@ -1,12 +1,10 @@
-import axios from "axios";
+import axios from "@/lib/utils/axiosConfig";
 
 
 async function queryGPTPreRegistration(query) {
     const experiences = JSON.parse(sessionStorage.getItem('workExperiences')) || [];
     try {
-        const response = await axios.post('http://localhost:8000/api/v1/users/experiences', { query, experiences}, {
-            withCredentials: true,  
-        });
+        const response = await axios.post('/users/experiences', { query, experiences});
 
         console.log(response.data);
         return response.data
