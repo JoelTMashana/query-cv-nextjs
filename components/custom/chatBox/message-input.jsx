@@ -51,7 +51,10 @@ const MessageInput = () => {
         className="flex-1 w-full pr-16 border-2 border-gray-300 rounded-md p-2 chat-area"
       />
       {promptCount !== 5 ?
-        <Button onClick={handleSendMessage} className="absolute bottom-4 right-0 mb-1 mr-5">Send</Button>
+        <Button onClick={handleSendMessage} 
+          className="absolute bottom-4 right-0 mb-1 mr-5"
+          disabled={!message.trim()}
+        >Send</Button>
         :
         <SingleSignOnLoginModal className="absolute bottom-4 right-0 mb-1 mr-5"/>
       }
