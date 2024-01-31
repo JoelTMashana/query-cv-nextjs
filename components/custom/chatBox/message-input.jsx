@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import TextareaAutosize from 'react-textarea-autosize';
-import { queryGPTPreRegistration } from '@/services/chatService';
+import { queryGPTPreRegistration, queryGPTPostRegistration } from '@/services/chatService';
 import useChatStore from '@/store/chatStore';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -26,7 +26,8 @@ const MessageInput = () => {
       let response;
       console.log('is logged in: ', isLoggedIn);
       if (isLoggedIn) {
-        console.log('User is logged in so would call the other function');
+        console.log('User is logged');
+        response = await queryGPTPostRegistration(message);
       } else {
         response = await queryGPTPreRegistration(message);
       }
