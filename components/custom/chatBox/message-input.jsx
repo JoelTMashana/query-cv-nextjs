@@ -51,7 +51,7 @@ const MessageInput = () => {
         className="flex-1 w-full pr-16 border-2 border-gray-300 rounded-md p-2 chat-area"
       />
       <div className="absolute bottom-4 right-0 mb-1 mr-5">
-        {promptCount > 2 ? (
+        {promptCount < 2 ? (
           <Button onClick={handleSendMessage} disabled={!message.trim()}>
             Send
           </Button>
