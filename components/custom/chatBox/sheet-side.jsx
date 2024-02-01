@@ -14,6 +14,7 @@ import NavItem from "../navigation/nav-item";
 import LogoutIcon from "../icons/logout-icon";
 import ChatBubbleIcon from "../icons/chat-bubble";
 import PenicilSquareIcon from "../icons/pencil-square";
+import PersonIcon from "../icons/person";
 
 export function SheetSide() {
   const { isLoggedIn, user } = useChatStore();
@@ -45,7 +46,10 @@ export function SheetSide() {
               </NavItem>
             </>
           ) : (
-            <NavItem href="/register">Register</NavItem>
+            <NavItem href="/register">
+              <PersonIcon className="w-6 h-6 mr-2" />
+              Register
+            </NavItem>
           )}         
         </ul>
         </div>
