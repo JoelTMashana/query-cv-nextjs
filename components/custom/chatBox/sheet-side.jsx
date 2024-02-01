@@ -29,11 +29,13 @@ export function SheetSide() {
         </Button>
       </SheetTrigger>
       <SheetContent>
-        <SheetHeader>
-        <div className="sidebar-top-content">
-          <SidebarAvatar src="/female_user.ico" fallbackText="CN" />
-        </div>
-        </SheetHeader>
+        { isLoggedIn &&
+          <SheetHeader>
+          <div className="sidebar-top-content">
+            <SidebarAvatar src="/female_user.ico" fallbackText="User Image" />
+          </div>
+          </SheetHeader>
+        }
         <div className="flex-1"> 
         <ul className="flex flex-col gap-4 py-4">
           {isLoggedIn ? (
