@@ -30,10 +30,9 @@ const MessageItem = ({ message }) => {
           const paragraph = paragraphs[currentParagraphIndex]; 
           if (currentCharIndex < paragraph.length) { 
           
-            if (typedTextArray[currentParagraphIndex] === undefined) {
+            if (typedTextArray[currentParagraphIndex] === undefined) 
               typedTextArray[currentParagraphIndex] = '';
-            }
-
+            
             let nextCharacter = paragraph[currentCharIndex];
 
             typedTextArray[currentParagraphIndex] += nextCharacter;
