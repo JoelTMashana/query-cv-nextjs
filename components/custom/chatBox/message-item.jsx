@@ -43,9 +43,6 @@ const MessageItem = ({ message }) => {
           } else {
             currentCharIndex = 0;
             currentParagraphIndex++;
-            if (currentParagraphIndex < paragraphs.length) {
-              typedTextArray.push('');
-            }
           }
         }
       };
