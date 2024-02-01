@@ -33,7 +33,6 @@ export function SheetSide() {
         <div className="sidebar-top-content">
           <SidebarAvatar src="/female_user.ico" fallbackText="CN" />
         </div>
-          {/* <SheetTitle>{isLoggedIn && user ? `${user.firstname} ${user.lastname}` : "Manage Profile"}</SheetTitle> */}
         </SheetHeader>
         <div className="flex-1"> 
         <ul className="flex flex-col gap-4 py-4">
