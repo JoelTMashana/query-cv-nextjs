@@ -9,13 +9,11 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import LogoutButton from "@/components/custom/logout-button";
-import Link from "next/link";
 import useChatStore from "@/store/chatStore";
-
+import NavItem from "../navigation/nav-item";
 
 export function SheetSide() {
-  const { isLoggedIn, user } = useChatStore(); // Destructto get isLoggedIn and user
+  const { isLoggedIn, user } = useChatStore();
 
   return (
     <Sheet>
@@ -24,29 +22,23 @@ export function SheetSide() {
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          {/* Conditionally render the title based on user's name or fallback to a default title */}
           <SheetTitle>{isLoggedIn && user ? `${user.firstname} ${user.lastname}` : "Manage Profile"}</SheetTitle>
         </SheetHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            { isLoggedIn ?
-              <>
-                <Button asChild>
-                  <Link href="/upload-workexperience/manual-entry">Add</Link>
-                </Button>
-                <LogoutButton/>
-              </>
-              :
-              <Button asChild>
-                  <Link href="/register">Register</Link>
-              </Button>
-            }
-            <Button asChild>
-              <Link href="/chat" className="m-2">Chat</Link>
-            </Button>
-          </div>
+        <div className="flex-1"> 
+        <ul className="flex flex-col gap-4 py-4">
+          {isLoggedIn ? (
+            <>
+              <NavItem href="/upload-workexperience/manual-entry">Add Work Experience</NavItem>
+              <NavItem href="/chat">Chat</NavItem>
+              <NavItem href="/login">Logout</NavItem>
+            </>
+          ) : (
+            <NavItem href="/register">Register</NavItem>
+          )}         
+        </ul>
         </div>
       </SheetContent>
+    
     </Sheet>
   )
 }
