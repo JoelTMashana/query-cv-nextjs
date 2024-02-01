@@ -2,8 +2,6 @@
 import Link from "next/link";
 import { logoutUser } from '@/services/authenticationService';
 import { usePathname } from 'next/navigation'
-import LogoutIcon from "../icons/logout-icon";
-
 
 const NavItem = ({ href, children }) => {
     const pathname = usePathname();
@@ -33,7 +31,7 @@ const NavItem = ({ href, children }) => {
                     flex items-center // Make the container a flexbox to align items horizontally
                 `} onClick={handleClick}>
                     <span className="mr-2">
-                    <LogoutIcon className="w-6 h-6 mr-2" />
+                    {/* <LogoutIcon className="w-6 h-6 mr-2" /> */}
 
                     </span> 
                     {children}

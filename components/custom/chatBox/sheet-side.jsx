@@ -11,6 +11,9 @@ import {
 } from "@/components/ui/sheet"
 import useChatStore from "@/store/chatStore";
 import NavItem from "../navigation/nav-item";
+import LogoutIcon from "../icons/logout-icon";
+import ChatBubbleIcon from "../icons/chat-bubble";
+import PenicilSquareIcon from "../icons/pencil-square";
 
 export function SheetSide() {
   const { isLoggedIn, user } = useChatStore();
@@ -28,9 +31,18 @@ export function SheetSide() {
         <ul className="flex flex-col gap-4 py-4">
           {isLoggedIn ? (
             <>
-              <NavItem href="/upload-workexperience/manual-entry">Add Work Experience</NavItem>
-              <NavItem href="/chat">Chat</NavItem>
-              <NavItem href="/login">Logout</NavItem>
+              <NavItem href="/upload-workexperience/manual-entry">
+              <PenicilSquareIcon className="w-6 h-6 mr-2" />
+                Add Work Experience
+              </NavItem>
+              <NavItem href="/chat">
+              <ChatBubbleIcon className="w-6 h-6 mr-2" />
+                Chat
+              </NavItem>
+              <NavItem href="/login">
+                <LogoutIcon className="w-6 h-6 mr-2" />
+                Logout
+              </NavItem>
             </>
           ) : (
             <NavItem href="/register">Register</NavItem>
