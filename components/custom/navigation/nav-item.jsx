@@ -27,13 +27,8 @@ const NavItem = ({ href, children }) => {
                     cursor-pointer
                     whitespace-nowrap
                     transition-colors
-                    font-medium
-                    flex items-center // Make the container a flexbox to align items horizontally
+                    flex items-center
                 `} onClick={handleClick}>
-                    <span className="mr-2">
-                    {/* <LogoutIcon className="w-6 h-6 mr-2" /> */}
-
-                    </span> 
                     {children}
                 </div>
             </Link>
