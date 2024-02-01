@@ -1,8 +1,7 @@
-
 const Layout = ({ children }) => {
   return (
     <div className="chat-container">
-      {children} 
+      {children}
     </div>
   );
 };

@@ -9,41 +9,60 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import LogoutButton from "@/components/custom/logout-button";
-import Link from "next/link";
 import useChatStore from "@/store/chatStore";
-
+import NavItem from "../navigation/nav-item";
+import LogoutIcon from "../icons/logout-icon";
+import ChatBubbleIcon from "../icons/chat-bubble";
+import PenicilSquareIcon from "../icons/pencil-square";
+import PersonIcon from "../icons/person";
+import BarsIcon from "../icons/bars";
+import SidebarAvatar from "../avatars/sidebar-avatar";
 
 export function SheetSide() {
-  const { isLoggedIn, user } = useChatStore(); // Destructto get isLoggedIn and user
+  const { isLoggedIn, user } = useChatStore();
 
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline">Open</Button>
+        <Button variant="outline">
+          <BarsIcon className="w-6 h-6" />
+        </Button>
       </SheetTrigger>
       <SheetContent>
-        <SheetHeader>
-          {/* Conditionally render the title based on user's name or fallback to a default title */}
-          <SheetTitle>{isLoggedIn && user ? `${user.firstname} ${user.lastname}` : "Manage Profile"}</SheetTitle>
-        </SheetHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            { isLoggedIn ?
-              <>
-                <Button asChild>
-                  <Link href="/upload-workexperience/manual-entry">Add</Link>
-                </Button>
-                <LogoutButton/>
-              </>
-              :
-              <Button asChild>
-                  <Link href="/register">Register</Link>
-              </Button>
-            }
+        { isLoggedIn &&
+          <SheetHeader>
+          <div className="sidebar-top-content">
+            <SidebarAvatar src="/female_user.ico" fallbackText="User Image" />
           </div>
+          </SheetHeader>
+        }
+        <div className="flex-1"> 
+        <ul className="flex flex-col gap-4 py-4">
+          {isLoggedIn ? (
+            <>
+              <NavItem href="/upload-workexperience/manual-entry">
+              <PenicilSquareIcon className="w-5 h-5 mr-2" />
+                Add Work Experience
+              </NavItem>
+              <NavItem href="/chat">
+              <ChatBubbleIcon className="w-5 h-5 mr-2" />
+                Chat
+              </NavItem>
+              <NavItem href="/login">
+                <LogoutIcon className="w-5 h-5 mr-2" />
+                Logout
+              </NavItem>
+            </>
+          ) : (
+            <NavItem href="/register">
+              <PersonIcon className="w-5 h-5 mr-2" />
+              Register
+            </NavItem>
+          )}         
+        </ul>
         </div>
       </SheetContent>
+    
     </Sheet>
   )
 }

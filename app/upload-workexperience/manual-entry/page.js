@@ -1,5 +1,4 @@
-import { Button } from "@/components/ui/button"
-import Link from "next/link";
+"use client"
 import {
   Card,
   CardContent,
@@ -21,9 +20,6 @@ export default function Page() {
             <WorkExperienceForm/>
           </CardContent>
         </Card>
-        <Button asChild>
-          <Link href="/chat" className="m-2">Chat</Link>
-        </Button>
       </div>
   );
 }
