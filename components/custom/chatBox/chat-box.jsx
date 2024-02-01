@@ -13,7 +13,7 @@ const ChatArea = () => {
   useEffect(() => {
     if (chatAreaRef.current) {
       const { current: chatDiv } = chatAreaRef;
-      chatDiv.scrollTop = chatDiv.scrollHeight; // Scroll to the bottom
+      chatDiv.scrollTop = chatDiv.scrollHeight; 
     }
   }, [messages]);
 
