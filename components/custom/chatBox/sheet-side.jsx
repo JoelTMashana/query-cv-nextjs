@@ -17,6 +17,7 @@ import PenicilSquareIcon from "../icons/pencil-square";
 import PersonIcon from "../icons/person";
 import BarsIcon from "../icons/bars";
 import SidebarAvatar from "../avatars/sidebar-avatar";
+import LoginIcon from "../icons/login-icon";
 
 export function SheetSide() {
   const { isLoggedIn, user } = useChatStore();
@@ -54,10 +55,16 @@ export function SheetSide() {
               </NavItem>
             </>
           ) : (
+            <>
             <NavItem href="/register">
               <PersonIcon className="w-5 h-5 mr-2" />
               Register
             </NavItem>
+            <NavItem href="/login">
+              <LoginIcon className="w-5 h-5 mr-2" />
+              Login
+            </NavItem>
+            </>
           )}         
         </ul>
         </div>
