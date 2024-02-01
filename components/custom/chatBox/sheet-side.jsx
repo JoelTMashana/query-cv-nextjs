@@ -41,6 +41,9 @@ export function SheetSide() {
                   <Link href="/register">Register</Link>
               </Button>
             }
+            <Button asChild>
+              <Link href="/chat" className="m-2">Chat</Link>
+            </Button>
           </div>
         </div>
       </SheetContent>
