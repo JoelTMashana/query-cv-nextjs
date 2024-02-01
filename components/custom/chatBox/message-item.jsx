@@ -28,9 +28,8 @@ const MessageItem = ({ message }) => {
         <div className={`${avatarClasses}`}>
           {avatar}
         </div>
-          <p>{sender}</p>
+          <p className="font-medium">{sender}</p>
       </div>
-        <CardTitle>{message.senderName}</CardTitle>
       <CardContent >
         {paragraphs.map((paragraph, index) => (
           <p key={index} className="mt-4">{paragraph.trim()}</p>
