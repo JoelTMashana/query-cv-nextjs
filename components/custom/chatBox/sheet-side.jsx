@@ -15,6 +15,8 @@ import LogoutIcon from "../icons/logout-icon";
 import ChatBubbleIcon from "../icons/chat-bubble";
 import PenicilSquareIcon from "../icons/pencil-square";
 import PersonIcon from "../icons/person";
+import BarsIcon from "../icons/bars";
+import SidebarAvatar from "../avatars/sidebar-avatar";
 
 export function SheetSide() {
   const { isLoggedIn, user } = useChatStore();
@@ -22,10 +24,15 @@ export function SheetSide() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline">Open</Button>
+        <Button variant="outline">
+          <BarsIcon className="w-6 h-6" />
+        </Button>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
+        <div className="sidebar-top-content">
+          <SidebarAvatar src="/female_woman_user.ico" fallbackText="CN" />
+        </div>
           <SheetTitle>{isLoggedIn && user ? `${user.firstname} ${user.lastname}` : "Manage Profile"}</SheetTitle>
         </SheetHeader>
         <div className="flex-1"> 
