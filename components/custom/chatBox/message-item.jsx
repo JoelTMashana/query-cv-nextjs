@@ -8,24 +8,71 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 
+import React, { useState, useEffect } from 'react';
+
 const MessageItem = ({ message }) => {
-  // Split the message text into paragraphs using 'PARAGRAPH:' as the delimiter
+  const [typedText, setTypedText] = useState([]);
   const paragraphs = message.text.split('PARAGRAPH:').filter(p => p.trim() !== '');
 
+  console.log('Paragraphs: ', paragraphs);
+  useEffect(() => {
+
+    setTypedText([]);
+
+
+    if (message.sender === "gpt") {
+      let currentParagraphIndex = 0;
+      let currentCharIndex = 0;
+      const typedTextArray = [];
+
+      const typeChar = () => {
+        if (currentParagraphIndex < paragraphs.length) { 
+          const paragraph = paragraphs[currentParagraphIndex]; 
+          if (currentCharIndex < paragraph.length) { 
+          
+            if (typedTextArray[currentParagraphIndex] === undefined) 
+              typedTextArray[currentParagraphIndex] = '';
+            
+            let nextCharacter = paragraph[currentCharIndex];
+
+            typedTextArray[currentParagraphIndex] += nextCharacter;
+
+            currentCharIndex++;
+            setTypedText([...typedTextArray]);
+          } else {
+            currentCharIndex = 0;
+            currentParagraphIndex++;
+          }
+        }
+      };
+
+      const intervalId = setInterval(typeChar, 2); 
+
+      return () => clearInterval(intervalId);
+    } else {
+      setTypedText(paragraphs);
+    }
+  }, [message.text, message.sender]); 
+
+  const avatarClasses = message.sender === "user" 
+    ? "bg-gray-200 mr-4 rounded-full w-8 h-8 flex items-center justify-center" 
+    : "bg-[#678fe6] text-white mr-4 rounded-full w-8 h-8 flex items-center justify-center";
+  const avatar = message.sender === "user" ? "U" : "G";
+  const sender = message.sender === "user" ? "You" : "Career Coach";
+
   return (
-    <Card className="mb-2">
-      <CardHeader>
-        <CardTitle>{message.senderName}</CardTitle>
-      </CardHeader>
+    <Card className="mb-2 border-none shadow-none">
+      <div className="flex items-center">
+        <div className={`${avatarClasses}`}>
+          {avatar}
+        </div>
+        <p className="font-medium">{sender}</p>
+      </div>
       <CardContent>
-        {paragraphs.map((paragraph, index) => (
-          // Render each paragraph in a separate p tag
-          <p key={index} className="mt-4">{paragraph.trim()}</p>
+        {typedText.map((paragraph, index) => (
+          <p key={index} className="mt-4">{paragraph}</p>
         ))}
       </CardContent>
-      <CardFooter>
-        <p className="text-sm">{message.timestamp}</p>
-      </CardFooter>
     </Card>
   );
 };

@@ -5,9 +5,8 @@ import TextareaAutosize from 'react-textarea-autosize';
 import { queryGPTPreRegistration, queryGPTPostRegistration } from '@/services/chatService';
 import useChatStore from '@/store/chatStore';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import SingleSignOnLoginModal from '../login/SSO-modal';
-
+import ArrowUpIcon from '../icons/arrow-up';
 
 const MessageInput = () => {
   const router = useRouter()
@@ -53,7 +52,7 @@ const MessageInput = () => {
       <div className="absolute bottom-4 right-0 mb-1 mr-5">
         {promptCount < 2 ? (
           <Button onClick={handleSendMessage} disabled={!message.trim()}>
-            Send
+            <ArrowUpIcon className="w-5 h-5"/>
           </Button>
         ) : (
           <SingleSignOnLoginModal />
