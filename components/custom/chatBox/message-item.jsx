@@ -9,23 +9,31 @@ import {
 } from "@/components/ui/card";
 
 const MessageItem = ({ message }) => {
-  // Split the message text into paragraphs using 'PARAGRAPH:' as the delimiter
   const paragraphs = message.text.split('PARAGRAPH:').filter(p => p.trim() !== '');
+  if(message.sender === "user") {
+    console.log("User sent this message: ", message);
+  } 
 
+  if(message.sender === "gpt") {
+    console.log("Gpt sent this message: ", message);
+  }
+
+  const avatar = message.sender === "user" ? "U" : "G";
+  const sender = message.sender === "user" ? "You" : "Career Coach";
   return (
-    <Card className="mb-2">
-      <CardHeader>
+    <Card className="mb-2 border-none shadow-none">
+      <div className="flex items-center">
+        <div className="mr-4 bg-gray-200 rounded-full w-8 h-8 flex items-center justify-center">
+          {avatar}
+        </div>
+          <p>{sender}</p>
+      </div>
         <CardTitle>{message.senderName}</CardTitle>
-      </CardHeader>
-      <CardContent>
+      <CardContent >
         {paragraphs.map((paragraph, index) => (
-          // Render each paragraph in a separate p tag
           <p key={index} className="mt-4">{paragraph.trim()}</p>
         ))}
       </CardContent>
-      <CardFooter>
-        <p className="text-sm">{message.timestamp}</p>
-      </CardFooter>
     </Card>
   );
 };
