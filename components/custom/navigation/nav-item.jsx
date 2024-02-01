@@ -13,24 +13,24 @@ const NavItem = ({ href, children }) => {
     };
     return (
         <li>
-            <div onClick={handleClick}className={`
-                ${isActive ? 
-                    'bg-primary text-primary-foreground border-primary' 
-                    : 
-                    'bg-transparent hover:bg-primary/85 hover:text-primary-foreground border-transparent'}
-                py-2 
-                px-4 
-                border 
-                rounded-md 
-                cursor-pointer
-                whitespace-nowrap
-                transition-colors
-                font-medium 
-            `}>
-            <Link href={href}>
-                {children} 
+            <Link href={href} passHref>
+                <div className={`
+                    ${isActive ? 
+                        'bg-primary text-primary-foreground border-primary' 
+                        : 
+                        'bg-transparent hover:bg-primary/85 hover:text-primary-foreground border-transparent'}
+                    py-2 
+                    px-4 
+                    border 
+                    rounded-md 
+                    cursor-pointer
+                    whitespace-nowrap
+                    transition-colors
+                    font-medium
+                `} onClick={handleClick}>
+                    {children}
+                </div>
             </Link>
-            </div>
         </li>
     );
 
