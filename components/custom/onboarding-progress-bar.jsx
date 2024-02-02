@@ -27,7 +27,7 @@ const OnboardingProgressBar = () => {
         { isLoggedIn === false &&
             <div className="relative w-full">
                 <div className="absolute w-full flex justify-center items-center mt-4">
-                    <div className="w-11/12 md:w-5/6 lg:w-3/12">
+                    <div className="w-8/12 md:w-3/6 lg:w-3/12">
                     <Progress value={progressValue} />
                     </div>
                 </div>
