@@ -12,6 +12,7 @@ import {
 import useWorkExperienceStore from "@/store/useWorkExperienceStore"
 import { deleteWorkExperience } from "@/services/workExperienceService"
 import WorkExperienceFormModal from "../work-experience-form-modal"
+import Link from "next/link"
 
 export const columns = [
   {
@@ -56,9 +57,11 @@ export const columns = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>
-              View
-            </DropdownMenuItem>
+            <Link href="/upload-workexperience/manual-entry">
+              <DropdownMenuItem>
+                Add
+              </DropdownMenuItem>
+            </Link>
             <DropdownMenuSeparator />
             <DropdownMenuItem 
               

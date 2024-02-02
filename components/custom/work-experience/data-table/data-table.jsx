@@ -17,6 +17,8 @@ import {
   TableCaption
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
+import PenicilSquareIcon from "../../icons/pencil-square"
+import WorkExperienceFormModal from "../work-experience-form-modal"
 
 export function DataTable({
   columns,
@@ -39,7 +41,11 @@ export function DataTable({
   const { pageIndex } = getState();
 
   return (
-    <div>
+    <div className="mx-auto  lg:container">
+        <div className="flex justify-between items-center mb-4">
+            <h1 className="text-4xl font-semibold">Work Experience</h1>
+            <WorkExperienceFormModal/>
+        </div>
         <div className="rounded-md border">
             <Table>
                 <TableCaption>A list of your work experience.</TableCaption>
