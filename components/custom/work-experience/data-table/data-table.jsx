@@ -17,8 +17,8 @@ import {
   TableCaption
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
-import PenicilSquareIcon from "../../icons/pencil-square"
-import WorkExperienceFormModal from "../work-experience-form-modal"
+import Link from "next/link"
+import AddIcon from "../../icons/add-icon"
 
 export function DataTable({
   columns,
@@ -43,8 +43,10 @@ export function DataTable({
   return (
     <div className="mx-auto  lg:container">
         <div className="flex justify-between items-center mb-4">
-            <h1 className="text-4xl font-semibold">Work Experience</h1>
-            <WorkExperienceFormModal/>
+            <h1 className="text-2xl sm:text-4xl  font-semibold">Work Experience</h1>
+            <Link href="/upload-workexperience/manual-entry" className="bg-[#678fe6] p-1 rounded">
+                < AddIcon className="w-5 h-5 text-white" />
+            </Link>
         </div>
         <div className="rounded-md border">
             <Table>
