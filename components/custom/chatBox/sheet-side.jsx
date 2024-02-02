@@ -49,6 +49,9 @@ export function SheetSide() {
               <ChatBubbleIcon className="w-5 h-5 mr-2" />
                 Chat
               </NavItem>
+              <NavItem href="/manage-work-experience">
+                Manage Work Experience
+              </NavItem>
               <NavItem href="/login">
                 <LogoutIcon className="w-5 h-5 mr-2" />
                 Logout
