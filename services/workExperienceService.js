@@ -30,7 +30,7 @@ async function getTools() {
   }
 };
 
-async function handleWorkExperienceSubmission(formData) {
+const handleWorkExperienceSubmission = async (formData) => {
   console.log('handleWorkExperienceSubmission called!');
   try {
     // Organise form data
@@ -56,20 +56,20 @@ async function handleWorkExperienceSubmission(formData) {
 }
 
 // Helper function to create and link skills
-async function linkSkillsToExperience(skills, experienceId) {
+const linkSkillsToExperience = async (skills, experienceId) => {
   if (skills && skills.length > 0) {
     const response = await axios.post(`/experiences/${experienceId}/skills`, { skill_ids: skills });
   }
 }
 
 
-async function linkToolstoExperience(tools, experienceId) {
+const linkToolstoExperience = async (tools, experienceId) => {
   if (tools && tools.length > 0) {
     await axios.post(`/experiences/${experienceId}/tools`, { tool_ids: tools });
   }
 }
 
-async function linkSkillsAndToolsToUser(userId, skillIds, toolIds) {
+const linkSkillsAndToolsToUser = async (userId, skillIds, toolIds) => {
   if (skillIds.length > 0) {
     await axios.post(`/users/${userId}/skills`, { skill_ids: skillIds });
   }
@@ -78,5 +78,24 @@ async function linkSkillsAndToolsToUser(userId, skillIds, toolIds) {
   }
 }
 
+const deleteWorkExperience = async (experienceId) => {
+  console.log('Deleting experince!');
+  try {
+    const response = await axios.delete(`/experiences/${experienceId}`)
+    console.log(response.data);
+    console.log(`Experience ${experienceId} deleted.`);
+    return response.data
+  } catch (error) {
+    console.error(`Failed to fetch delete experince with id: ${experienceId}`, error);
+  }
 
-export {getSkills, getTools, handleWorkExperienceSubmission}
+}
+
+
+
+export {
+  getSkills, 
+  getTools, 
+  handleWorkExperienceSubmission, 
+  deleteWorkExperience
+}

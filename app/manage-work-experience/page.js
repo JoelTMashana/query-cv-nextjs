@@ -7,19 +7,8 @@ import useChatStore from "@/store/chatStore";
 import axios from "@/lib/utils/axiosConfig";
 
 
-// async function getData(userId) {
-//   try {
-//     const response = await axios.get(`/users/${userId}/experiences`);
-//     return response.data; 
-//   } catch (error) {
-//     console.error('Error fetching the data:', error);
-//     return [];
-//   }
-// }
-
 export default function Page() {
   const { user } = useChatStore();
-  // const [data, setData] = useState([]);
   const setExperiences = useWorkExperienceStore((state) => state.setExperiences);
 
 

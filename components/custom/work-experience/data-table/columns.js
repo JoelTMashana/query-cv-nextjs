@@ -1,7 +1,5 @@
 "use client"
-import { ColumnDef } from "@tanstack/react-table"
 import { MoreHorizontal } from "lucide-react"
- 
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -11,7 +9,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-
+import useWorkExperienceStore from "@/store/useWorkExperienceStore"
+import { deleteWorkExperience } from "@/services/workExperienceService"
 
 export const columns = [
   {
@@ -38,8 +37,14 @@ export const columns = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const payment = row.original
- 
+      const deleteExperience = useWorkExperienceStore(state => state.deleteExperience);
+      
+      const handleDelete = () => {
+        if(row.original.experience_id) {
+          deleteWorkExperience(row.original.experience_id)
+        }
+        deleteExperience(row.original.experience_id);
+      };
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -59,7 +64,7 @@ export const columns = [
             >
               Edit
             </DropdownMenuItem>
-            <DropdownMenuItem>Delete</DropdownMenuItem>
+            <DropdownMenuItem onSelect={handleDelete}>Delete</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )
