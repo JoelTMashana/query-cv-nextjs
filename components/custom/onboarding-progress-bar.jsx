@@ -8,23 +8,25 @@ const OnboardingProgressBar = () => {
     const pathname = usePathname();
     const isLoggedIn = useChatStore((state) => state.isLoggedIn);
 
-    let progressValue;
-    console.log('Pathname: ', pathname);
+    const visiblePaths = [
+        '/',
+        '/upload-workexperience',
+        '/upload-workexperience/manual-entry/pre-registration',
+        '/chat'
+    ];
 
+    let progressValue = 0;
     if (pathname === '/') {
         progressValue = 0;
-    } else if (pathname === '/upload-workexperience') {
+    } else if (pathname === '/upload-workexperience' || pathname === '/upload-workexperience/manual-entry/pre-registration') {
         progressValue = 33;
-    } else if (pathname === '/upload-workexperience/manual-entry/pre-registration'){
-        progressValue = 33;
-        console.log('pp', progressValue);
     } else if (pathname === '/chat') {
         progressValue = isLoggedIn ? 100 : 66;
     }
 
     return (
     <>
-        { isLoggedIn === false &&
+        { visiblePaths.includes(pathname) && !isLoggedIn ? 
             <div className="relative w-full">
                 <div className="absolute w-full flex justify-center items-center mt-4">
                     <div className="w-8/12 md:w-3/6 lg:w-3/12">
@@ -32,6 +34,8 @@ const OnboardingProgressBar = () => {
                     </div>
                 </div>
             </div>
+            :
+            null
         }  
     </>
         
