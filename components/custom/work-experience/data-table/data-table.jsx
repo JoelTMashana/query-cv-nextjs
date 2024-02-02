@@ -14,6 +14,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
+  TableCaption
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 
@@ -41,6 +42,7 @@ export function DataTable({
     <div>
         <div className="rounded-md border">
             <Table>
+                <TableCaption>A list of your work experience.</TableCaption>
                 <TableHeader>
                 {table.getHeaderGroups().map((headerGroup) => (
                     <TableRow key={headerGroup.id}>

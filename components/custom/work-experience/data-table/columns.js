@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import useWorkExperienceStore from "@/store/useWorkExperienceStore"
 import { deleteWorkExperience } from "@/services/workExperienceService"
+import WorkExperienceFormModal from "../work-experience-form-modal"
 
 export const columns = [
   {
