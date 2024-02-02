@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import StickyNavBar from "@/components/custom/navigation/sticky-nav-bar";
 import Footer from "@/components/custom/footer";
+import OnboardingProgressBar from "@/components/custom/onboarding-progress-bar";
 
 const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
@@ -14,6 +15,7 @@ export default function RootLayout({ children}) {
     <html lang="en">
       <body className={inter.className}>
         <StickyNavBar/>
+        <OnboardingProgressBar className="w-[60%]"/>
         {children}
         <Footer/>
       </body>
