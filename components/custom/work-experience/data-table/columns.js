@@ -15,26 +15,26 @@ import {
 
 export const columns = [
   {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "position",
+    header: "Position",
   },
   {
-    accessorKey: "email",
-    header: "Email",
+    accessorKey: "tenure",
+    header: "Tenure",
   },
   {
-    accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
-    cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"))
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(amount)
- 
-      return <div className="text-right font-medium">{formatted}</div>
-    },
+    accessorKey: "company",
+    header: "Company",
   },
+  {
+    accessorKey: "description",
+    header: "Description",
+  },
+  {
+    accessorKey: "outcomes",
+    header: "Outcomes",
+  },
+
   {
     id: "actions",
     cell: ({ row }) => {

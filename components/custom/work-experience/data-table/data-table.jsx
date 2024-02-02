@@ -1,5 +1,4 @@
 "use client"
-
 import {
   ColumnDef,
   flexRender,
@@ -28,6 +27,15 @@ export function DataTable({
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   })
+  const {
+    getState,
+    getCanPreviousPage,
+    getCanNextPage,
+    previousPage,
+    nextPage,
+  } = table;
+  
+  const { pageIndex } = getState();
 
   return (
     <div>
@@ -78,22 +86,29 @@ export function DataTable({
 
         {/** Handles Pagination */}
         <div className="flex items-center justify-end space-x-2 py-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          Previous
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          Next
-        </Button>
+            <Button
+                variant="outline"
+                size="sm"
+                onClick={() => previousPage()}
+                disabled={!getCanPreviousPage()}
+            >
+                Previous
+            </Button>
+
+            {/* Pagination Counting */}
+            <span>
+                Page{' '}
+                {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+            </span>
+
+            <Button
+                variant="outline"
+                size="sm"
+                onClick={() => nextPage()}
+                disabled={!getCanNextPage()}
+            >
+                Next
+            </Button>
         </div>
     </div>
   )
