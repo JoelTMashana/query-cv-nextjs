@@ -1,10 +1,12 @@
 "use client"
+import { useState } from "react"
 import { Progress } from "@/components/ui/progress"
 import useChatStore from "@/store/chatStore"
 import { usePathname } from 'next/navigation'
 
 
 const OnboardingProgressBar = () => {
+    const [isOnBoarding, setIsOnBoarding] = useState(false);
     const pathname = usePathname();
     const isLoggedIn = useChatStore((state) => state.isLoggedIn);
 
@@ -12,8 +14,10 @@ const OnboardingProgressBar = () => {
         '/',
         '/upload-workexperience',
         '/upload-workexperience/manual-entry/pre-registration',
-        '/chat'
+        '/chat',
+        '/register'
     ];
+
 
     let progressValue = 0;
     if (pathname === '/') {
@@ -21,7 +25,9 @@ const OnboardingProgressBar = () => {
     } else if (pathname === '/upload-workexperience' || pathname === '/upload-workexperience/manual-entry/pre-registration') {
         progressValue = 33;
     } else if (pathname === '/chat') {
-        progressValue = isLoggedIn ? 100 : 66;
+        progressValue = 66;
+    } else if (pathname === '/register') {
+        progressValue = 100;
     }
 
     return (

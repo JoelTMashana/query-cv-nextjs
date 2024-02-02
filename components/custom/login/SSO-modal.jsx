@@ -1,11 +1,23 @@
 import { Button } from "@/components/ui/button"
 import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import Link from "next/link";
+import {
     Dialog,
     DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
     DialogTrigger,
   } from "@/components/ui/dialog"
 import ArrowUpIcon from "../icons/arrow-up";
-import RegistrationForm from "../registration/registration-form";
+
 const SingleSignOnLoginModal = () => {
   return (
      <Dialog>
@@ -15,7 +27,25 @@ const SingleSignOnLoginModal = () => {
         </Button>
       </DialogTrigger>
       <DialogContent className="lg:w-[700px] bg-transparent border-0 text-transparent "> 
-        <RegistrationForm/>
+    <Card className="w-[350px] mx-auto">
+      <CardHeader className="text-center">
+        <CardTitle>Login</CardTitle>
+        <CardDescription className="text-center">
+          Please register for the full experience.
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="text-center">
+        <form>
+          <div className="grid w-full items-center gap-4">
+            <div className="flex flex-col space-y-1.5 "> 
+              <Button asChild>
+                <Link href="/register" className="text-center">Register</Link>
+              </Button>
+            </div>
+          </div>
+        </form>
+      </CardContent>
+    </Card>
     </DialogContent>
     </Dialog>
 
