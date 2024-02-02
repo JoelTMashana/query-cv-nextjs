@@ -41,16 +41,13 @@ export function SheetSide() {
         <ul className="flex flex-col gap-4 py-4">
           {isLoggedIn ? (
             <>
-              <NavItem href="/upload-workexperience/manual-entry">
+              <NavItem href="/manage-work-experience">
               <PenicilSquareIcon className="w-5 h-5 mr-2" />
-                Add Work Experience
+                Manage Work Experience
               </NavItem>
               <NavItem href="/chat">
               <ChatBubbleIcon className="w-5 h-5 mr-2" />
                 Chat
-              </NavItem>
-              <NavItem href="/manage-work-experience">
-                Manage Work Experience
               </NavItem>
               <NavItem href="/login">
                 <LogoutIcon className="w-5 h-5 mr-2" />
