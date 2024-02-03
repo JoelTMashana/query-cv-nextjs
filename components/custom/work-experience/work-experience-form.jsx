@@ -1,6 +1,5 @@
 "use client"
 import { Button } from "@/components/ui/button"
-import Link from "next/link";
 import { Input } from "@/components/ui/input"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -14,12 +13,12 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import  SelectScrollable  from "../select-scrollable";
 import { DatePickerWithRange } from "../data-range-picker";
 import { Textarea } from "../../ui/textarea";
 import dynamic from 'next/dynamic';
 import { handleWorkExperienceSubmission } from "@/services/workExperienceService";
-
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from 'react';
 
 const MultiSelectNoSSR = dynamic(() => import('../multi-select'), {
   ssr: false, // Disable SSR
@@ -44,6 +43,25 @@ const formSchema = z.object({
 
 
 export default  function WorkExperienceForm() {
+  const router = useRouter();
+
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    // Set isClient to true to indicate the component has mounted
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (isClient) { // Only check router.query after the component has mounted
+      if (router.query) {
+        console.log('EDIT:', router.query);
+      } else {
+        console.log('Not edit');
+      }
+    }
+  }, [router.query, isClient]); 
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {

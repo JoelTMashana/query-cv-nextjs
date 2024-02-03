@@ -55,7 +55,7 @@ const formSchema = z.object({
 });
 
 
-const WorkExperienceFormModal = () => {
+const WorkExperienceFormModal = ({text}) => {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {

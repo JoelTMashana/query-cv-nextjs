@@ -11,8 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import useWorkExperienceStore from "@/store/useWorkExperienceStore"
 import { deleteWorkExperience } from "@/services/workExperienceService"
-import WorkExperienceFormModal from "../work-experience-form-modal"
-import Link from "next/link"
+import DeleteButton from "./delete-button"
 
 export const columns = [
   {
@@ -45,7 +44,12 @@ export const columns = [
         if(row.original.experience_id) {
           deleteWorkExperience(row.original.experience_id)
         }
-        deleteExperience(row.original.experience_id);
+        deleteExperience(C);
+      };
+      const handleEdit = () => {
+        const setEditingId = useWorkExperienceStore(state => state.setEditingId);
+        setEditingId(row.original.experience_id);
+        window.location.href = '/upload-workexperience/manual-entry';
       };
       return (
         <DropdownMenu>
@@ -58,16 +62,25 @@ export const columns = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem 
-              
-            >
-              Edit
-            </DropdownMenuItem>
-            <DropdownMenuItem onSelect={handleDelete}>Delete</DropdownMenuItem>
+              <DropdownMenuItem 
+                onSelect={handleEdit}
+                >
+                    Edit
+              </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )
     },
+
+  },
+  {
+    accessorKey: "edit",
+    header: "Edit",
+  },
+  {
+    accessorKey: "delete",
+    header: "Delete",
+    cell: ({ row }) => <DeleteButton experienceId={row.original.experience_id} />,
   },
 
 ]
