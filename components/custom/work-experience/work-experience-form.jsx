@@ -17,8 +17,8 @@ import { DatePickerWithRange } from "../data-range-picker";
 import { Textarea } from "../../ui/textarea";
 import dynamic from 'next/dynamic';
 import { handleWorkExperienceSubmission } from "@/services/workExperienceService";
-import { useRouter } from "next/navigation"
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import useWorkExperienceStore from '@/store/useWorkExperienceStore';
 
 const MultiSelectNoSSR = dynamic(() => import('../multi-select'), {
   ssr: false, // Disable SSR
@@ -43,24 +43,7 @@ const formSchema = z.object({
 
 
 export default  function WorkExperienceForm() {
-  const router = useRouter();
-
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    // Set isClient to true to indicate the component has mounted
-    setIsClient(true);
-  }, []);
-
-  useEffect(() => {
-    if (isClient) { // Only check router.query after the component has mounted
-      if (router.query) {
-        console.log('EDIT:', router.query);
-      } else {
-        console.log('Not edit');
-      }
-    }
-  }, [router.query, isClient]); 
+  const editingId = useWorkExperienceStore((state) => state.editingId);
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -75,6 +58,11 @@ export default  function WorkExperienceForm() {
       tools: []
     },
   })
+  useEffect(() => {
+    if (editingId !== null) {
+      console.log("Editing ID from store:", editingId);
+    }
+  }, [editingId]);
 
   const { reset } = form;
 
