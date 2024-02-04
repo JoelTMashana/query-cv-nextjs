@@ -30,24 +30,25 @@ async function getTools() {
   }
 };
 
-async function handleWorkExperienceSubmission(formData) {
+const handleWorkExperienceSubmission = async (formData) => {
   console.log('handleWorkExperienceSubmission called!');
   try {
     // Organise form data
-    const { selectedSkills, selectedTools } = useSelectionStore.getState();
-    const {user} = useChatStore.getState();
+    console.log('Form data on submission: ', formData);
+    const { user } = useChatStore.getState();
     const userId = user.user_id;
-    const { position, company, industry, duration, description, outcomes } = formData;
-    const experienceData = { position, company, industry, duration, description, outcomes };
+    const { skills, tools, ...experienceData } = formData;
 
+    console.log('Skills in submission function: ', skills)
+    console.log('tools in submission function: ', tools)
+    // Post the experience data
     const experienceResponse = await axios.post(`/users/${userId}/experiences`, experienceData);
-
     const experienceId = experienceResponse.data.experience_id;
 
-    // Link items to experiece and user
-    await linkSkillsToExperience(selectedSkills, experienceId);
-    await linkToolstoExperience(selectedTools, experienceId);
-    await linkSkillsAndToolsToUser(userId, selectedSkills, selectedTools);
+    // Link skills and tools with the experience and user
+    await linkSkillsToExperience(skills, experienceId);
+    await linkToolstoExperience(tools, experienceId);
+    await linkSkillsAndToolsToUser(userId, skills, tools);
 
     console.log('handleWorkExperienceSubmission success!');
   } catch (error) {
@@ -56,20 +57,20 @@ async function handleWorkExperienceSubmission(formData) {
 }
 
 // Helper function to create and link skills
-async function linkSkillsToExperience(skills, experienceId) {
+const linkSkillsToExperience = async (skills, experienceId) => {
   if (skills && skills.length > 0) {
     const response = await axios.post(`/experiences/${experienceId}/skills`, { skill_ids: skills });
   }
 }
 
 
-async function linkToolstoExperience(tools, experienceId) {
+const linkToolstoExperience = async (tools, experienceId) => {
   if (tools && tools.length > 0) {
     await axios.post(`/experiences/${experienceId}/tools`, { tool_ids: tools });
   }
 }
 
-async function linkSkillsAndToolsToUser(userId, skillIds, toolIds) {
+const linkSkillsAndToolsToUser = async (userId, skillIds, toolIds) => {
   if (skillIds.length > 0) {
     await axios.post(`/users/${userId}/skills`, { skill_ids: skillIds });
   }
@@ -78,5 +79,74 @@ async function linkSkillsAndToolsToUser(userId, skillIds, toolIds) {
   }
 }
 
+const deleteWorkExperience = async (experienceId) => {
+  console.log('Deleting experince!');
+  try {
+    const response = await axios.delete(`/experiences/${experienceId}`)
+    console.log(response.data);
+    console.log(`Experience ${experienceId} deleted.`);
+    return response.data
+  } catch (error) {
+    console.error(`Failed to delete experince with id: ${experienceId}`, error);
+  }
 
-export {getSkills, getTools, handleWorkExperienceSubmission}
+}
+
+const getExperience = async (experienceId) => {
+  console.log('Getting experince!');
+  try {
+    const response = await axios.get(`/experiences/${experienceId}`)
+    console.log(response.data);
+    console.log(`Retrieved experience with id: ${experienceId}.`);
+    return response.data
+  } catch (error) {
+    console.error(`Failed to fetch experince with id: ${experienceId}`, error);
+  }
+
+}
+
+const updateExperience = async (experience_id, experienceData) => {
+  const response = await axios.patch(`/experiences/${experience_id}`, experienceData);
+  console.log('Experience updated successfully:', response.data);
+};
+
+const updateExperienceSkills = async (experience_id, skills) => {
+  const response = await axios.patch(`/experiences/${experience_id}/skills`, { skill_ids: skills });
+  console.log('Skills updated successfully:', response.data);
+};
+
+const updateExperienceTools = async (experience_id, tools) => {
+  const response = await axios.patch(`/experiences/${experience_id}/tools`, { tool_ids: tools });
+  console.log('Tools updated successfully:', response.data);
+};
+
+const handleEditWorkExperience = async (formData, experience_id) => {
+  console.log('Form Data for Edit: ', formData);
+  const { skills, tools, ...experienceData } = formData;
+
+  try {
+    await updateExperience(experience_id, experienceData);
+
+    if (skills && skills.length > 0) {
+      await updateExperienceSkills(experience_id, skills);
+    }
+
+    if (tools && tools.length > 0) {
+      await updateExperienceTools(experience_id, tools);
+    }
+
+  } catch (error) {
+    console.error('An error occurred during the edit operation:', error);
+  }
+};
+
+
+
+export {
+  getSkills, 
+  getTools, 
+  handleWorkExperienceSubmission, 
+  deleteWorkExperience,
+  getExperience,
+  handleEditWorkExperience
+}

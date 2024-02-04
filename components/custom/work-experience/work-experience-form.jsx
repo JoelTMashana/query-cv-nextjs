@@ -1,6 +1,5 @@
 "use client"
 import { Button } from "@/components/ui/button"
-import Link from "next/link";
 import { Input } from "@/components/ui/input"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -14,13 +13,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import  SelectScrollable  from "../select-scrollable";
 import { DatePickerWithRange } from "../data-range-picker";
 import { Textarea } from "../../ui/textarea";
 import dynamic from 'next/dynamic';
-import { handleWorkExperienceSubmission } from "@/services/workExperienceService";
-
-
+import { handleWorkExperienceSubmission, handleEditWorkExperience } from "@/services/workExperienceService";
+import { Controller, useFormContext } from "react-hook-form";
+import { getExperience } from "@/services/workExperienceService"
+import { useEffect } from "react"
+import { useRouter } from "next/navigation"
 const MultiSelectNoSSR = dynamic(() => import('../multi-select'), {
   ssr: false, // Disable SSR
 });
@@ -38,12 +38,13 @@ const formSchema = z.object({
     .min(20, "Description must be at least 20 characters."),
   outcomes: z.string()
     .min(20, "Outcomes must be at least 20 characters."),
-  skills: z.array(z.string()), 
-  tools: z.array(z.string())
+  skills: z.array(z.any()), 
+  tools: z.array(z.any())  
 });
 
 
-export default  function WorkExperienceForm() {
+export default  function WorkExperienceForm({experience_id}) {
+  const router = useRouter();
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -57,22 +58,56 @@ export default  function WorkExperienceForm() {
       tools: []
     },
   })
-
+  
   const { reset } = form;
+  useEffect(() => {
+    const fetchData = async () => {
+      if (experience_id) {
+        const data = await getExperience(experience_id);
 
+        const formattedSkills = data.skills.map(skill => skill.skill_id);
+        const formattedTools = data.tools.map(tool => tool.tool_id);
+
+        console.log('Formated: ', formattedSkills)
+
+        reset({
+          ...data,
+          skills: formattedSkills,
+          tools: formattedTools
+        });
+      }
+    };
+
+    fetchData();
+  }, [experience_id, reset]);
+
+  
   function onSubmit(values) {
-    console.log(values);
-    handleWorkExperienceSubmission(values).then(() => {
-      reset({
-        position: values.position,
-        company: values.company,
-        industry: values.industry, 
-        duration: values.duration, 
-        outcomes: "",
+    console.log('Form values on submit: ', values);
+
+    if (experience_id) {
+      handleEditWorkExperience(values, experience_id).then(() => {
+        alert('Edit experience succeess!');
+        router.push('/manage-work-experience');
+
+      }).catch((error) => {
+        console.error('Edit or reset failed:', error);
       });
-    }).catch((error) => {
-      console.error('Submission or reset failed:', error);
-    });
+    } else {
+      handleWorkExperienceSubmission(values).then(() => {
+        reset({
+          position: values.position,
+          company: values.company,
+          industry: values.industry, 
+          duration: values.duration, 
+          outcomes: "",
+        });
+        alert('Add experience succeess!');
+      }).catch((error) => {
+        console.error('Submission or reset failed:', error);
+      });
+    }
+    
   }
 
   return (
@@ -117,19 +152,6 @@ export default  function WorkExperienceForm() {
               </FormItem>
             )}
           />
-          {/* <FormField
-            control={form.control}
-            name="industry"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Industry</FormLabel>
-                <FormControl>
-                  <SelectScrollable {...field}/>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          /> */}
           <FormField
             control={form.control}
             name="duration"
@@ -138,7 +160,6 @@ export default  function WorkExperienceForm() {
                 <FormLabel>Duration</FormLabel>
                 <FormControl>
                   <DatePickerWithRange  {...field}/>
-                  {/* <Input placeholder="01/01/2020 - 01/01/2023" {...field} /> */}
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -176,28 +197,27 @@ export default  function WorkExperienceForm() {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
+          <Controller
             name="skills"
+            control={form.control}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Skills</FormLabel>
                 <FormControl>
-                  <MultiSelectNoSSR {...field} items="skills"/>
+                  <MultiSelectNoSSR {...field} items="skills" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-
-          <FormField
-            control={form.control}
+          <Controller
             name="tools"
+            control={form.control}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Tools</FormLabel>
                 <FormControl>
-                  <MultiSelectNoSSR {...field} items="tools"/>
+                  <MultiSelectNoSSR {...field} items="tools" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
