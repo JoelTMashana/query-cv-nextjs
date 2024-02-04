@@ -38,12 +38,12 @@ const formSchema = z.object({
     .min(20, "Description must be at least 20 characters."),
   outcomes: z.string()
     .min(20, "Outcomes must be at least 20 characters."),
-    skills: z.array(z.any()), 
-    tools: z.array(z.any())  
+  skills: z.array(z.any()), 
+  tools: z.array(z.any())  
 });
 
 
-export default  function WorkExperienceForm({formId}) {
+export default  function WorkExperienceForm({experience_id}) {
   const router = useRouter();
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -62,8 +62,8 @@ export default  function WorkExperienceForm({formId}) {
   const { reset } = form;
   useEffect(() => {
     const fetchData = async () => {
-      if (formId) {
-        const data = await getExperience(formId);
+      if (experience_id) {
+        const data = await getExperience(experience_id);
 
         const formattedSkills = data.skills.map(skill => skill.skill_id);
         const formattedTools = data.tools.map(tool => tool.tool_id);
@@ -79,16 +79,17 @@ export default  function WorkExperienceForm({formId}) {
     };
 
     fetchData();
-  }, [formId, reset]);
+  }, [experience_id, reset]);
 
   
   function onSubmit(values) {
     console.log('Form values on submit: ', values);
 
-    if (formId) {
-      handleEditWorkExperience(values).then(() => {
+    if (experience_id) {
+      handleEditWorkExperience(values, experience_id).then(() => {
         alert('Edit experience succeess!');
-        router.push('/manage-work-experience')
+        router.push('/manage-work-experience');
+
       }).catch((error) => {
         console.error('Edit or reset failed:', error);
       });
@@ -209,8 +210,6 @@ export default  function WorkExperienceForm({formId}) {
               </FormItem>
             )}
           />
-
-
           <Controller
             name="tools"
             control={form.control}

@@ -105,9 +105,30 @@ const getExperience = async (experienceId) => {
 
 }
 
-const handleEditWorkExperience = async (formData) => {
+const handleEditWorkExperience = async (formData, experience_id) => {
   console.log('Form Data for Edit: ', formData);
-}
+
+  const {skills, tools, ...experienceData } = formData;
+
+  try {
+    const experienceResponse = await axios.patch(`/experiences/${experience_id}`, experienceData);
+    console.log('Experience updated successfully:', experienceResponse.data);
+
+    if (skills && skills.length > 0) {
+      const skillsResponse = await axios.patch(`/experiences/${experience_id}/skills`, { skill_ids: skills });
+      console.log('Skills updated successfully:', skillsResponse.data);
+    }
+
+    if (tools && tools.length > 0) {
+      const toolsResponse = await axios.patch(`/experiences/${experience_id}/tools`, { tool_ids: tools });
+      console.log('Tools updated successfully:', toolsResponse.data);
+    }
+
+  } catch (error) {
+    console.error('An error occurred during the edit operation:', error);
+  }
+};
+
 
 
 export {

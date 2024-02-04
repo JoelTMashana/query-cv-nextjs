@@ -18,7 +18,7 @@ import WorkExperienceForm from "@/components/custom/work-experience/work-experie
               <CardDescription>Card Description</CardDescription>
             </CardHeader>
             <CardContent>
-                <WorkExperienceForm formId={params.id}/>
+                <WorkExperienceForm experience_id={params.id}/>
             </CardContent>
           </Card>
         </div>
