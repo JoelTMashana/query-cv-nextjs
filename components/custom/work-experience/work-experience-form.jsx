@@ -16,7 +16,7 @@ import {
 import { DatePickerWithRange } from "../data-range-picker";
 import { Textarea } from "../../ui/textarea";
 import dynamic from 'next/dynamic';
-import { handleWorkExperienceSubmission } from "@/services/workExperienceService";
+import { handleWorkExperienceSubmission, handleEditWorkExperience } from "@/services/workExperienceService";
 import { Controller, useFormContext } from "react-hook-form";
 import { getExperience } from "@/services/workExperienceService"
 import { useEffect } from "react"
@@ -45,7 +45,6 @@ const formSchema = z.object({
 
 export default  function WorkExperienceForm({formId}) {
   
-  // getExperince(formId)
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -84,19 +83,29 @@ export default  function WorkExperienceForm({formId}) {
 
   
   function onSubmit(values) {
-    console.log('Add WE form Submit button hit!!!');
     console.log('Form values on submit: ', values);
-    handleWorkExperienceSubmission(values).then(() => {
-      reset({
-        position: values.position,
-        company: values.company,
-        industry: values.industry, 
-        duration: values.duration, 
-        outcomes: "",
+
+    if (formId) {
+      handleEditWorkExperience(values).then(() => {
+        alert('Edit experience succeess!');
+      }).catch((error) => {
+        console.error('Edit or reset failed:', error);
       });
-    }).catch((error) => {
-      console.error('Submission or reset failed:', error);
-    });
+    } else {
+      handleWorkExperienceSubmission(values).then(() => {
+        reset({
+          position: values.position,
+          company: values.company,
+          industry: values.industry, 
+          duration: values.duration, 
+          outcomes: "",
+        });
+        alert('Add experience succeess!');
+      }).catch((error) => {
+        console.error('Submission or reset failed:', error);
+      });
+    }
+    
   }
 
   return (

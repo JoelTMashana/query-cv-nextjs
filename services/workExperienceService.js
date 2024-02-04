@@ -106,10 +106,6 @@ const getExperience = async (experienceId) => {
 }
 
 const handleEditWorkExperience = async (formData) => {
-  const { selectedSkills, selectedTools } = useSelectionStore.getState();
-
-  console.log('Selected skills on edit: ', selectedSkills)
-  console.log('Selected tools on edit: ', selectedTools)
   console.log('Form Data for Edit: ', formData);
 }
 
