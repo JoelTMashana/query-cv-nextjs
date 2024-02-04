@@ -4,7 +4,7 @@ import { getSkills, getTools } from "@/services/workExperienceService";
 import useSelectionStore from "@/store/useSelectionStore";
 
 
-const MultiSelect = ({ items }) => {
+const MultiSelectEdit = ({ items, initialSelected }) => {
     const [options, setOptions] = useState([]);
     const [selectedOptions, setSelectedOptions] = useState([]);
     const { setSelectedSkills, setSelectedTools } = useSelectionStore();
@@ -18,7 +18,10 @@ const MultiSelect = ({ items }) => {
         fetchData();
     }, [items]);
     
-
+    
+    useEffect(() => {
+        setSelectedOptions(initialSelected);
+    }, [initialSelected]);
 
     const handleChange = (selectedOptions) => {
         setSelectedOptions(selectedOptions);
@@ -26,7 +29,7 @@ const MultiSelect = ({ items }) => {
         const selectedValues = selectedOptions ? selectedOptions.map(option => option.value) : [];
         console.log('Selected Value: ', selectedValues)
         if (items === "skills") {
-            setSelectedSkills(selectedValues);
+            setSelectedSkills(setSelectedSkills);
             console.log('Selected for store: ', setSelectedSkills)
         } else {
             setSelectedTools(selectedValues);
@@ -47,4 +50,4 @@ const MultiSelect = ({ items }) => {
     );
 };
 
-export default MultiSelect;
+export default MultiSelectEdit;

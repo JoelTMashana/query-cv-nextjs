@@ -18,9 +18,10 @@ import { Textarea } from "../../ui/textarea";
 import dynamic from 'next/dynamic';
 import { handleWorkExperienceSubmission } from "@/services/workExperienceService";
 import { useEffect } from 'react';
-import useWorkExperienceStore from '@/store/useWorkExperienceStore';
+import { getExperience } from "@/services/workExperienceService"
+// import MultiSelectEdit from "../multi-select-edit"
 
-const MultiSelectNoSSR = dynamic(() => import('../multi-select'), {
+const MultiSelectNoSSR = dynamic(() => import('../multi-select-edit'), {
   ssr: false, // Disable SSR
 });
 
@@ -42,15 +43,14 @@ const formSchema = z.object({
 });
 
 
-export default  function EditWorkExperienceForm() {
-  const editingId = useWorkExperienceStore((state) => state.editingId);
-  const experiences = useWorkExperienceStore((state) => state.experiences);
-  const experienceToEdit = experiences.find((exp) => exp.experience_id === editingId);
+export default  function EditWorkExperienceForm({formId}) {
+
+  console.log('Experience ID: ', getExperience(formId))
 
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      position: "",
+      position: "test",
       company: "",
       industry: "",
       duration: "",
@@ -62,16 +62,27 @@ export default  function EditWorkExperienceForm() {
   })
   
   const { reset } = form;
+  
   useEffect(() => {
-    if (experienceToEdit) {
-      console.log("Experience to edit: ", experienceToEdit);
-      reset({
-        ...experienceToEdit,
-        skills:  experienceToEdit.skills,
-        tools: experienceToEdit.tools,
-      });
+    async function fetchExperience() {
+      const experienceData = await getExperience(formId);
+      console.log('Experience Data: ', experienceData);
+      if (experienceData) {
+        console.log("Experience to edit: ", experienceData);
+        const transformedSkills = experienceData.skills.map(skill => ({ value: skill.skill_id.toString(), label: skill.skill_name }));
+        const transformedTools = experienceData.tools.map(tool => ({ value: tool.tool_id.toString(), label: tool.tool_name }));
+
+        reset({
+          ...experienceData,
+          skills: transformedSkills,
+          tools: transformedTools,
+        });
+      }
     }
-  }, [experienceToEdit, reset]);
+
+    fetchExperience();
+  }, [formId, reset]);
+
 
 
   function onSubmit(values) {
@@ -131,19 +142,6 @@ export default  function EditWorkExperienceForm() {
               </FormItem>
             )}
           />
-          {/* <FormField
-            control={form.control}
-            name="industry"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Industry</FormLabel>
-                <FormControl>
-                  <SelectScrollable {...field}/>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          /> */}
           <FormField
             control={form.control}
             name="duration"
@@ -152,7 +150,6 @@ export default  function EditWorkExperienceForm() {
                 <FormLabel>Duration</FormLabel>
                 <FormControl>
                   <DatePickerWithRange  {...field}/>
-                  {/* <Input placeholder="01/01/2020 - 01/01/2023" {...field} /> */}
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -197,7 +194,7 @@ export default  function EditWorkExperienceForm() {
               <FormItem>
                 <FormLabel>Skills</FormLabel>
                 <FormControl>
-                  <MultiSelectNoSSR {...field} items="skills"/>
+                <MultiSelectNoSSR items="skills" initialSelected={form.watch('skills')} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -211,7 +208,7 @@ export default  function EditWorkExperienceForm() {
               <FormItem>
                 <FormLabel>Tools</FormLabel>
                 <FormControl>
-                  <MultiSelectNoSSR {...field} items="tools"/>
+                <MultiSelectNoSSR items="tools" initialSelected={form.watch('tools')} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

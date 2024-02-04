@@ -1,13 +1,10 @@
 import { Button } from "@/components/ui/button";
-import useWorkExperienceStore from "@/store/useWorkExperienceStore";
 import { useRouter } from 'next/navigation';
 
 const EditButton = ({ experienceId }) => {
-  const setEditingId = useWorkExperienceStore((state) => state.setEditingId);
   const router = useRouter();
 
   const handleEdit = () => {
-    // setEditingId(experienceId);
     router.push(`/manage-work-experience/edit/${experienceId}`); 
   };
 

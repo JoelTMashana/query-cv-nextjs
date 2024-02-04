@@ -86,7 +86,20 @@ const deleteWorkExperience = async (experienceId) => {
     console.log(`Experience ${experienceId} deleted.`);
     return response.data
   } catch (error) {
-    console.error(`Failed to fetch delete experince with id: ${experienceId}`, error);
+    console.error(`Failed to delete experince with id: ${experienceId}`, error);
+  }
+
+}
+
+const getExperience = async (experienceId) => {
+  console.log('Getting experince!');
+  try {
+    const response = await axios.get(`/experiences/${experienceId}`)
+    console.log(response.data);
+    console.log(`Retrieved experience with id: ${experienceId}.`);
+    return response.data
+  } catch (error) {
+    console.error(`Failed to fetch experince with id: ${experienceId}`, error);
   }
 
 }
@@ -97,5 +110,6 @@ export {
   getSkills, 
   getTools, 
   handleWorkExperienceSubmission, 
-  deleteWorkExperience
+  deleteWorkExperience,
+  getExperience
 }

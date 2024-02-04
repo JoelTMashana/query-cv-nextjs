@@ -10,7 +10,6 @@ import EditWorkExperienceForm from "@/components/custom/work-experience/edit-wor
 
   export default function Page({ params }) {
 
-
     return (
       <>
         <div className="w-full flex justify-center items-center flex-col min-h-screen">
@@ -21,7 +20,7 @@ import EditWorkExperienceForm from "@/components/custom/work-experience/edit-wor
               <CardDescription>Card Description</CardDescription>
             </CardHeader>
             <CardContent>
-                <EditWorkExperienceForm/>
+                <EditWorkExperienceForm formId={params.id}/>
             </CardContent>
           </Card>
         </div>
