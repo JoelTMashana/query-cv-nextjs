@@ -17,6 +17,8 @@ import { DatePickerWithRange } from "../data-range-picker";
 import { Textarea } from "../../ui/textarea";
 import dynamic from 'next/dynamic';
 import { handleWorkExperienceSubmission } from "@/services/workExperienceService";
+import { Controller, useFormContext } from "react-hook-form";
+
 
 const MultiSelectNoSSR = dynamic(() => import('../multi-select'), {
   ssr: false, // Disable SSR
@@ -35,12 +37,13 @@ const formSchema = z.object({
     .min(20, "Description must be at least 20 characters."),
   outcomes: z.string()
     .min(20, "Outcomes must be at least 20 characters."),
-  skills: z.array(z.string()), 
-  tools: z.array(z.string())
+    skills: z.array(z.any()), 
+    tools: z.array(z.any())  
 });
 
 
 export default  function WorkExperienceForm() {
+  // const { control } = useFormContext();
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -59,7 +62,8 @@ export default  function WorkExperienceForm() {
   const { reset } = form;
 
   function onSubmit(values) {
-    console.log(values);
+    console.log('Add WE form Submit button hit!!!');
+    console.log('Form values on submit: ', values);
     handleWorkExperienceSubmission(values).then(() => {
       reset({
         position: values.position,
@@ -115,19 +119,6 @@ export default  function WorkExperienceForm() {
               </FormItem>
             )}
           />
-          {/* <FormField
-            control={form.control}
-            name="industry"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Industry</FormLabel>
-                <FormControl>
-                  <SelectScrollable {...field}/>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          /> */}
           <FormField
             control={form.control}
             name="duration"
@@ -136,7 +127,6 @@ export default  function WorkExperienceForm() {
                 <FormLabel>Duration</FormLabel>
                 <FormControl>
                   <DatePickerWithRange  {...field}/>
-                  {/* <Input placeholder="01/01/2020 - 01/01/2023" {...field} /> */}
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -174,28 +164,29 @@ export default  function WorkExperienceForm() {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
+          <Controller
             name="skills"
+            control={form.control}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Skills</FormLabel>
                 <FormControl>
-                  <MultiSelectNoSSR {...field} items="skills"/>
+                  <MultiSelectNoSSR {...field} items="skills" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
 
-          <FormField
-            control={form.control}
+
+          <Controller
             name="tools"
+            control={form.control}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Tools</FormLabel>
                 <FormControl>
-                  <MultiSelectNoSSR {...field} items="tools"/>
+                  <MultiSelectNoSSR {...field} items="tools" />
                 </FormControl>
                 <FormMessage />
               </FormItem>

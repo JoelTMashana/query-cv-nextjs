@@ -4,11 +4,8 @@ import { getSkills, getTools } from "@/services/workExperienceService";
 import useSelectionStore from "@/store/useSelectionStore";
 
 
-const MultiSelect = ({ items }) => {
+const MultiSelect = ({  items, value, onChange  }) => {
     const [options, setOptions] = useState([]);
-    const [selectedOptions, setSelectedOptions] = useState([]);
-    const { setSelectedSkills, setSelectedTools } = useSelectionStore();
-
 
     useEffect(() => {
         const fetchData = async () => {
@@ -18,23 +15,11 @@ const MultiSelect = ({ items }) => {
         fetchData();
     }, [items]);
     
-
-
     const handleChange = (selectedOptions) => {
-        setSelectedOptions(selectedOptions);
-        console.log('Selected: ', selectedOptions)
-        const selectedValues = selectedOptions ? selectedOptions.map(option => option.value) : [];
-        console.log('Selected Value: ', selectedValues)
-        if (items === "skills") {
-            setSelectedSkills(selectedValues);
-            console.log('Selected for store: ', setSelectedSkills)
-        } else {
-            setSelectedTools(selectedValues);
-            console.log('Selected for store: ', setSelectedTools)
-        }
-      
+        onChange(selectedOptions.map(option => option.value));
     };
 
+    const selectedOptions = options.filter(option => value.includes(option.value));
     return (
         <Select
             isMulti

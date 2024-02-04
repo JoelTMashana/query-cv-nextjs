@@ -34,20 +34,21 @@ const handleWorkExperienceSubmission = async (formData) => {
   console.log('handleWorkExperienceSubmission called!');
   try {
     // Organise form data
-    const { selectedSkills, selectedTools } = useSelectionStore.getState();
-    const {user} = useChatStore.getState();
+    console.log('Form data on submission: ', formData);
+    const { user } = useChatStore.getState();
     const userId = user.user_id;
-    const { position, company, industry, duration, description, outcomes } = formData;
-    const experienceData = { position, company, industry, duration, description, outcomes };
+    const { skills, tools, ...experienceData } = formData;
 
+    console.log('Skills in submission function: ', skills)
+    console.log('tools in submission function: ', tools)
+    // Post the experience data
     const experienceResponse = await axios.post(`/users/${userId}/experiences`, experienceData);
-
     const experienceId = experienceResponse.data.experience_id;
 
-    // Link items to experiece and user
-    await linkSkillsToExperience(selectedSkills, experienceId);
-    await linkToolstoExperience(selectedTools, experienceId);
-    await linkSkillsAndToolsToUser(userId, selectedSkills, selectedTools);
+    // Link skills and tools with the experience and user
+    await linkSkillsToExperience(skills, experienceId);
+    await linkToolstoExperience(tools, experienceId);
+    await linkSkillsAndToolsToUser(userId, skills, tools);
 
     console.log('handleWorkExperienceSubmission success!');
   } catch (error) {
@@ -104,6 +105,13 @@ const getExperience = async (experienceId) => {
 
 }
 
+const handleEditWorkExperience = async (formData) => {
+  const { selectedSkills, selectedTools } = useSelectionStore.getState();
+
+  console.log('Selected skills on edit: ', selectedSkills)
+  console.log('Selected tools on edit: ', selectedTools)
+  console.log('Form Data for Edit: ', formData);
+}
 
 
 export {
@@ -111,5 +119,6 @@ export {
   getTools, 
   handleWorkExperienceSubmission, 
   deleteWorkExperience,
-  getExperience
+  getExperience,
+  handleEditWorkExperience
 }

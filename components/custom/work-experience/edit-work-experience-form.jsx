@@ -16,11 +16,10 @@ import {
 import { DatePickerWithRange } from "../data-range-picker";
 import { Textarea } from "../../ui/textarea";
 import dynamic from 'next/dynamic';
-import { handleWorkExperienceSubmission } from "@/services/workExperienceService";
+import { handleEditWorkExperience } from "@/services/workExperienceService";
 import { useEffect } from 'react';
 import { getExperience } from "@/services/workExperienceService"
-// import MultiSelectEdit from "../multi-select-edit"
-
+import useSelectionStore from "@/store/useSelectionStore"
 const MultiSelectNoSSR = dynamic(() => import('../multi-select-edit'), {
   ssr: false, // Disable SSR
 });
@@ -38,8 +37,8 @@ const formSchema = z.object({
     .min(20, "Description must be at least 20 characters."),
   outcomes: z.string()
     .min(20, "Outcomes must be at least 20 characters."),
-  skills: z.array(z.string()), 
-  tools: z.array(z.string())
+  // skills: z.array(z.string()), 
+  // tools: z.array(z.string())
 });
 
 
@@ -68,10 +67,20 @@ export default  function EditWorkExperienceForm({formId}) {
       const experienceData = await getExperience(formId);
       console.log('Experience Data: ', experienceData);
       if (experienceData) {
-        console.log("Experience to edit: ", experienceData);
-        const transformedSkills = experienceData.skills.map(skill => ({ value: skill.skill_id.toString(), label: skill.skill_name }));
-        const transformedTools = experienceData.tools.map(tool => ({ value: tool.tool_id.toString(), label: tool.tool_name }));
-
+        const transformedSkills = experienceData.skills.map(skill => ({
+          value: skill.skill_id, 
+          label: skill.skill_name
+        }));
+        
+        const transformedTools = experienceData.tools.map(tool => ({
+          value: tool.tool_id, 
+          label: tool.tool_name
+        }));
+        console.log('Skills before transformation: ', experienceData.skills)
+        console.log('Transformed skills', transformedSkills);
+        const { setInitialSkills, setInitialTools } = useSelectionStore.getState();
+        setInitialSkills(transformedSkills);
+        setInitialTools(transformedTools);
         reset({
           ...experienceData,
           skills: transformedSkills,
@@ -87,14 +96,14 @@ export default  function EditWorkExperienceForm({formId}) {
 
   function onSubmit(values) {
     console.log(values);
-    handleWorkExperienceSubmission(values).then(() => {
-      reset({
-        position: values.position,
-        company: values.company,
-        industry: values.industry, 
-        duration: values.duration, 
-        outcomes: "",
-      });
+    const { selectedSkills, selectedTools } = useSelectionStore.getState();
+    const formData = {
+      ...values,
+      skills: selectedSkills.map(id => ({ skill_id: id })),
+      tools: selectedTools.map(id => ({ tool_id: id }))
+    };
+    handleEditWorkExperience(formData).then(() => {
+      console.log('Work experience submitted');
     }).catch((error) => {
       console.error('Submission or reset failed:', error);
     });
@@ -194,7 +203,7 @@ export default  function EditWorkExperienceForm({formId}) {
               <FormItem>
                 <FormLabel>Skills</FormLabel>
                 <FormControl>
-                <MultiSelectNoSSR items="skills" initialSelected={form.watch('skills')} />
+                <MultiSelectNoSSR items="skills"/>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -208,7 +217,7 @@ export default  function EditWorkExperienceForm({formId}) {
               <FormItem>
                 <FormLabel>Tools</FormLabel>
                 <FormControl>
-                <MultiSelectNoSSR items="tools" initialSelected={form.watch('tools')} />
+                <MultiSelectNoSSR items="tools"/>
                 </FormControl>
                 <FormMessage />
               </FormItem>
