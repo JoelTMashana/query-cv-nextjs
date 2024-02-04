@@ -17,6 +17,8 @@ import { DatePickerWithRange } from "../data-range-picker";
 import { Textarea } from "../../ui/textarea";
 import dynamic from 'next/dynamic';
 import { handleWorkExperienceSubmission } from "@/services/workExperienceService";
+import { useEffect } from 'react';
+import useWorkExperienceStore from '@/store/useWorkExperienceStore';
 
 const MultiSelectNoSSR = dynamic(() => import('../multi-select'), {
   ssr: false, // Disable SSR
@@ -40,7 +42,10 @@ const formSchema = z.object({
 });
 
 
-export default  function WorkExperienceForm() {
+export default  function EditWorkExperienceForm() {
+  const editingId = useWorkExperienceStore((state) => state.editingId);
+  const experiences = useWorkExperienceStore((state) => state.experiences);
+  const experienceToEdit = experiences.find((exp) => exp.experience_id === editingId);
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -57,6 +62,17 @@ export default  function WorkExperienceForm() {
   })
   
   const { reset } = form;
+  useEffect(() => {
+    if (experienceToEdit) {
+      console.log("Experience to edit: ", experienceToEdit);
+      reset({
+        ...experienceToEdit,
+        skills:  experienceToEdit.skills,
+        tools: experienceToEdit.tools,
+      });
+    }
+  }, [experienceToEdit, reset]);
+
 
   function onSubmit(values) {
     console.log(values);

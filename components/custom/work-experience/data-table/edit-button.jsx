@@ -7,8 +7,8 @@ const EditButton = ({ experienceId }) => {
   const router = useRouter();
 
   const handleEdit = () => {
-    setEditingId(experienceId);
-    router.push('/upload-workexperience/manual-entry'); 
+    // setEditingId(experienceId);
+    router.push(`/manage-work-experience/edit/${experienceId}`); 
   };
 
   return (

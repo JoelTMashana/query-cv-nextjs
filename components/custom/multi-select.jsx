@@ -17,12 +17,11 @@ const MultiSelect = ({ items }) => {
         };
         fetchData();
     }, [items]);
-
+    
     const handleChange = (selectedOptions) => {
         setSelectedOptions(selectedOptions);
         console.log('Selected: ', selectedOptions)
         const selectedValues = selectedOptions ? selectedOptions.map(option => option.value) : [];
-        
         // Update store based on 'items' prop
         if (items === "skills") {
             setSelectedSkills(selectedValues);
