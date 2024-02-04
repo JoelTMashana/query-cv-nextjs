@@ -17,7 +17,7 @@ export default function Page() {
             <CardDescription>Card Description</CardDescription>
           </CardHeader>
           <CardContent>
-            <WorkExperienceForm/>
+            <WorkExperienceForm action={"add"}/>
           </CardContent>
         </Card>
       </div>

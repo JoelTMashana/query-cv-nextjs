@@ -18,7 +18,8 @@ import { Textarea } from "../../ui/textarea";
 import dynamic from 'next/dynamic';
 import { handleWorkExperienceSubmission } from "@/services/workExperienceService";
 import { Controller, useFormContext } from "react-hook-form";
-
+import { getExperience } from "@/services/workExperienceService"
+import { useEffect } from "react"
 
 const MultiSelectNoSSR = dynamic(() => import('../multi-select'), {
   ssr: false, // Disable SSR
@@ -42,9 +43,9 @@ const formSchema = z.object({
 });
 
 
-export default  function WorkExperienceForm() {
-  // const { control } = useFormContext();
-
+export default  function WorkExperienceForm({formId}) {
+  
+  // getExperince(formId)
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -60,7 +61,28 @@ export default  function WorkExperienceForm() {
   })
   
   const { reset } = form;
+  useEffect(() => {
+    const fetchData = async () => {
+      if (formId) {
+        const data = await getExperience(formId);
 
+        const formattedSkills = data.skills.map(skill => skill.skill_id);
+        const formattedTools = data.tools.map(tool => tool.tool_id);
+
+        console.log('Formated: ', formattedSkills)
+
+        reset({
+          ...data,
+          skills: formattedSkills,
+          tools: formattedTools
+        });
+      }
+    };
+
+    fetchData();
+  }, [formId, reset]);
+
+  
   function onSubmit(values) {
     console.log('Add WE form Submit button hit!!!');
     console.log('Form values on submit: ', values);

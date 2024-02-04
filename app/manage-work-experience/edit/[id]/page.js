@@ -5,8 +5,7 @@ import {
     CardHeader,
     CardTitle,
   } from "@/components/ui/card"
-import EditWorkExperienceForm from "@/components/custom/work-experience/edit-work-experience-form";
-
+import WorkExperienceForm from "@/components/custom/work-experience/work-experience-form";
 
   export default function Page({ params }) {
 
@@ -19,7 +18,7 @@ import EditWorkExperienceForm from "@/components/custom/work-experience/edit-wor
               <CardDescription>Card Description</CardDescription>
             </CardHeader>
             <CardContent>
-                <EditWorkExperienceForm formId={params.id}/>
+                <WorkExperienceForm formId={params.id}/>
             </CardContent>
           </Card>
         </div>
