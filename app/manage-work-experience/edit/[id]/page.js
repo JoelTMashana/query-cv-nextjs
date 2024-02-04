@@ -11,10 +11,10 @@ import WorkExperienceForm from "@/components/custom/work-experience/work-experie
 
     return (
       <>
-        <div className="w-full flex justify-center items-center flex-col min-h-screen">
+        <div className="w-full flex justify-center items-center flex-col min-h-screen mt-3 mb-16 md:mt-6 lg:mt-0 lg:mb-0">
           <Card className="w-11/12 md:w-1/2 lg:w-2/5">
             <CardHeader>
-              <CardTitle>Form</CardTitle>
+              <CardTitle>Edit Work Experience Form</CardTitle>
               <CardDescription>Card Description</CardDescription>
             </CardHeader>
             <CardContent>
