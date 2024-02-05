@@ -8,6 +8,9 @@
     .custom-scroll-height {
       max-height: 1200px;
     }
+    .custom-width {
+      width: 79.66%
+    }
   }
   
   @media (max-width: 820px) {
