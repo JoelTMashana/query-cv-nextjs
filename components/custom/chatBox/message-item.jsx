@@ -7,12 +7,14 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
-
 import React, { useState, useEffect } from 'react';
+import useChatStore from "@/store/chatStore";
 
 const MessageItem = ({ message }) => {
   const [typedText, setTypedText] = useState([]);
   const paragraphs = message.text.split('PARAGRAPH:').filter(p => p.trim() !== '');
+  const latestGPTMessageId = useChatStore(state => state.latestGPTMessageId);
+  const isLatestGPTMessage = message.id === latestGPTMessageId;
 
   console.log('Paragraphs: ', paragraphs);
   useEffect(() => {
@@ -20,7 +22,7 @@ const MessageItem = ({ message }) => {
     setTypedText([]);
 
 
-    if (message.sender === "gpt") {
+    if (message.sender === "gpt" && isLatestGPTMessage) {
       let currentParagraphIndex = 0;
       let currentCharIndex = 0;
       const typedTextArray = [];

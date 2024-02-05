@@ -16,6 +16,9 @@ const MessageInput = () => {
   const resetPromptCount = useChatStore((state) => state.resetPromptCount);
   const isLoggedIn = useChatStore((state) => state.isLoggedIn);
 
+
+
+
   const handleSendMessage = async () => {
     if (message.trim()) {
       console.log(message);
