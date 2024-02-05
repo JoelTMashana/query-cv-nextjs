@@ -17,6 +17,7 @@ import {
 import { Textarea } from "../../ui/textarea";
 import { useEffect, useState } from "react";
 import { getTemporaryAccessTokenForUnregisteredUser } from "@/services/authenticationService";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   position: z.string()
@@ -29,6 +30,7 @@ const formSchema = z.object({
 
 
 export default  function PreRegistrationWorkExperienceForm() {
+  const router = useRouter();
   const [experienceCount, setExperienceCount] = useState(0);
 
   const form = useForm({
@@ -63,6 +65,7 @@ export default  function PreRegistrationWorkExperienceForm() {
   const hadleTokenGenerationClick = () => {
     console.log("Button clicked!");
     const response = getTemporaryAccessTokenForUnregisteredUser();
+    router.push('/chat/pre-registration');
   };
 
   return (

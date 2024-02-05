@@ -14,7 +14,7 @@ const OnboardingProgressBar = () => {
         '/',
         '/upload-workexperience',
         '/upload-workexperience/manual-entry/pre-registration',
-        '/chat',
+        '/chat/pre-registration',
         '/register'
     ];
 
@@ -24,7 +24,7 @@ const OnboardingProgressBar = () => {
         progressValue = 0;
     } else if (pathname === '/upload-workexperience' || pathname === '/upload-workexperience/manual-entry/pre-registration') {
         progressValue = 33;
-    } else if (pathname === '/chat' && !isLoggedIn ) {
+    } else if (pathname === '/chat/pre-registration' ) {
         progressValue = 66;
     } else if (pathname === '/register') {
         progressValue = 100;

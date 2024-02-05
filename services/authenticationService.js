@@ -30,11 +30,6 @@ async function getTemporaryAccessTokenForUnregisteredUser () {
     try {
         const response = await axios.post('/users/temporary-token', {});
         console.log(response.data);
-        if (response.data) {
-            window.location.href = '/chat'; 
-        } else {
-            console.error('An error occured');
-        }
     } catch (error) {
         console.error('An error occured:', error);
     }
