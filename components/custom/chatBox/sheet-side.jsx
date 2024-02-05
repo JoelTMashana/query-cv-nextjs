@@ -20,12 +20,12 @@ import SidebarAvatar from "../avatars/sidebar-avatar";
 import LoginIcon from "../icons/login-icon";
 
 export function SheetSide() {
-  const { isLoggedIn, user } = useChatStore();
+  const { isLoggedIn } = useChatStore();
 
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline">
+        <Button variant="outline border-none">
           <BarsIcon className="w-6 h-6" />
         </Button>
       </SheetTrigger>
