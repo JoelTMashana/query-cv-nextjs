@@ -7,7 +7,10 @@ const useChatStore = create(persist((set, get) => ({
   messages: [],
   promptCount: 0,
   latestGPTMessageId: null,
+  isGPTProcessing: false,
 
+  startGPTProcessing: () => set(() => ({ isGPTProcessing: true })),
+  stopGPTProcessing: () => set(() => ({ isGPTProcessing: false })),
   addMessage: (message) => set((state) => {
     const increment = message.sender === 'user' && !state.isLoggedIn ? 1 : 0;
     const isGPTMessage = message.sender === 'gpt';

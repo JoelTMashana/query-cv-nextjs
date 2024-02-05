@@ -58,7 +58,7 @@ const MessageItem = ({ message }) => {
 
   const avatarClasses = message.sender === "user" 
     ? "bg-gray-200 mr-4 rounded-full w-8 h-8 flex items-center justify-center" 
-    : "bg-[#678fe6] text-white mr-4 rounded-full w-8 h-8 flex items-center justify-center";
+    : "light-blue-gradient text-white mr-4 rounded-full w-8 h-8 flex items-center justify-center";
   const avatar = message.sender === "user" ? "U" : "G";
   const sender = message.sender === "user" ? "You" : "Career Coach";
 
