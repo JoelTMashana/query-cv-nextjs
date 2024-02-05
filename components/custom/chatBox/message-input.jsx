@@ -43,7 +43,7 @@ const MessageInput = () => {
   
 
   return (
-    <div className="message-input relative w-11/12 md:w-5/6 lg:w-5/12 first-line:gap-2">
+    <div className="message-input relative last:first-line:gap-2">
       <TextareaAutosize
         placeholder="Type your message here."
         minRows={2}
