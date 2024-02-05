@@ -47,6 +47,12 @@ const MessageInput = () => {
         maxRows={3}
         value={message}
         onChange={(e) => setMessage(e.target.value)}
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') { 
+            e.preventDefault();
+            handleSendMessage(); 
+          }
+        }}
         className="flex-1 w-full pr-16 border-2 border-gray-300 rounded-md p-2 chat-area"
       />
       <div className="absolute bottom-4 right-0 mb-1 mr-5">
