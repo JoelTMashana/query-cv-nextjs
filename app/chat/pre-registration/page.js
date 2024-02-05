@@ -1,27 +1,19 @@
 "use client"
 import MessageInput from "@/components/custom/chatBox/message-input";
 import ChatArea from "@/components/custom/chatBox/chat-box";
-import OnboardingProgressBar from "@/components/custom/onboarding-progress-bar";
-import useChatStore from "@/store/chatStore";
+
 const Page = () => {
-  const { isLoggedIn  } = useChatStore();
   return (
-    <div className="
-      w-full 
-      flex flex-col  
-      justify-between
-      sm:min-h-[500px] 
-      md:min-h-[600px] 
-      lg:min-h-[1200px]
-    ">
-      <div className="flex flex-col items-center"></div>  
-      <div className="w-full flex flex-col items-center mb-5"> 
-        <ChatArea/>
-        <MessageInput/>
+    <div className="flex flex-col justify-between w-full">
+
+      <div className="fixed inset-x-0 bottom-7 w-full flex justify-center">
+        <div className=" w-11/12 md:w-5/6 lg:w-5/12 custom-width"> 
+          <ChatArea/>
+          <MessageInput/>
+        </div>
       </div>
     </div>
   );
 }
 
 export default Page;
-
