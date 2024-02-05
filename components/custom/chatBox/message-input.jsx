@@ -6,7 +6,7 @@ import { queryGPTPreRegistration, queryGPTPostRegistration } from '@/services/ch
 import useChatStore from '@/store/chatStore';
 import { useRouter } from 'next/navigation';
 import SingleSignOnLoginModal from '../login/SSO-modal';
-import ArrowUpIcon from '../icons/arrow-up';
+import PaperPlaneIcon from '../icons/arrow-up';
 
 const MessageInput = () => {
   const router = useRouter()
@@ -43,31 +43,35 @@ const MessageInput = () => {
   
 
   return (
-    <div className="message-input relative last:first-line:gap-2">
-      <TextareaAutosize
-        placeholder="Type your message here."
-        minRows={2}
-        maxRows={3}
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        onKeyPress={(e) => {
-          if (e.key === 'Enter') { 
-            e.preventDefault();
-            handleSendMessage(); 
-          }
-        }}
-        className="flex-1 w-full pr-16 border-2 border-gray-300 rounded-md p-2 chat-area"
-      />
-      <div className="absolute bottom-4 right-0 mb-1 mr-5">
-        {promptCount < 2 ? (
-          <Button onClick={handleSendMessage} disabled={!message.trim()}>
-            <ArrowUpIcon className="w-5 h-5"/>
-          </Button>
-        ) : (
-          <SingleSignOnLoginModal />
-        )}
-      </div>
-    </div>
+<div className="relative w-full flex items-center">
+  <TextareaAutosize
+    placeholder="Type your message here."
+    minRows={1}
+    maxRows={3}
+    value={message}
+    onChange={(e) => setMessage(e.target.value)}
+    onKeyPress={(e) => {
+      if (e.key === 'Enter' && !e.shiftKey) { 
+        e.preventDefault();
+        handleSendMessage();
+      }
+    }}
+    className="w-full border-2 border-gray-300 rounded-2xl p-2 pr-10" 
+  />
+  <div className="absolute inset-y-0 right-3 flex items-center"> 
+    {promptCount < 2 ? (
+      <Button
+        onClick={handleSendMessage}
+        disabled={!message.trim()}
+        className="p-2 bg-transparent hover:bg-transparent"
+      >
+        <PaperPlaneIcon className="w-5 h-5 text-black"/>
+      </Button>
+    ) : (
+      <SingleSignOnLoginModal />
+    )}
+  </div>
+</div>
   );
   
 };
