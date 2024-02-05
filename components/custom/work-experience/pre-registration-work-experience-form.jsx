@@ -62,10 +62,13 @@ export default  function PreRegistrationWorkExperienceForm() {
     });
   };
 
-  const hadleTokenGenerationClick = () => {
+  const hadleTokenGenerationClick = async () => {
     console.log("Button clicked!");
-    const response = getTemporaryAccessTokenForUnregisteredUser();
-    router.push('/chat/pre-registration');
+    const response = await  getTemporaryAccessTokenForUnregisteredUser();
+    if (response) {
+      console.log('Response: ', response);
+      router.push('/chat/pre-registration');
+    }
   };
 
   return (

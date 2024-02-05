@@ -17,6 +17,7 @@ async function loginUser(email, password) {
 
 async function logoutUser() {
     try {
+        console.log('Logout User called')
         const response = await axios.post('/logout', {});
         useChatStore.getState().logoutUser();
         window.location.href = '/login'; 
@@ -29,7 +30,7 @@ async function logoutUser() {
 async function getTemporaryAccessTokenForUnregisteredUser () {
     try {
         const response = await axios.post('/users/temporary-token', {});
-        console.log(response.data);
+        return response.data;
     } catch (error) {
         console.error('An error occured:', error);
     }
