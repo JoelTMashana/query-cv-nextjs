@@ -63,16 +63,16 @@ const MessageItem = ({ message }) => {
   const sender = message.sender === "user" ? "You" : "Career Coach";
 
   return (
-    <Card className="mb-2 border-none shadow-none">
+    <Card className="mb-2  border-none shadow-none">
       <div className="flex items-center">
         <div className={`${avatarClasses}`}>
           {avatar}
         </div>
         <p className="font-medium">{sender}</p>
       </div>
-      <CardContent>
+      <CardContent className="p-0">
         {typedText.map((paragraph, index) => (
-          <p key={index} className="mt-4">{paragraph}</p>
+          <p key={index} className="mt-4 mb-4">{paragraph}</p>
         ))}
       </CardContent>
     </Card>

@@ -4,9 +4,50 @@
     }
   }
   
+@media (max-width: 1024px) {
+    .custom-scroll-height {
+      max-height: 1200px;
+    }
+  }
+  
+  @media (max-width: 820px) {
+    .custom-scroll-height {
+      max-height: 1016px; 
+    }
+  }
+
   @media (max-width: 768px) {
     .custom-scroll-height {
-      max-height: 750px; 
+      max-height: 860px; 
+    }
+  }
+  @media (max-width: 440px) {
+    .custom-scroll-height {
+      max-height: 768px; 
+    }
+  }
+  
+  @media (max-width: 420px) {
+    .custom-scroll-height {
+      max-height: 730px; 
+    }
+  }
+
+  @media (max-width: 400px) {
+    .custom-scroll-height {
+      max-height: 680px; 
+    }
+  }
+
+  @media (max-width:  380px) {
+    .custom-scroll-height {
+      max-height: 495px; 
+    }
+  }
+  
+  @media (max-width:  360px) {
+    .custom-scroll-height {
+      max-height: 575px; 
     }
   }
   
