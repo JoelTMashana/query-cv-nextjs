@@ -30,6 +30,7 @@ const OnboardingProgressBar = () => {
         progressValue = 100;
     }
 
+    console.log('Is Logged in: ', isLoggedIn);
     return (
     <>
         { visiblePaths.includes(pathname) && !isLoggedIn ? 

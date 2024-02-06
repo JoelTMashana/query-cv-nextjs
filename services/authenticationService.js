@@ -2,8 +2,9 @@ import axios from "@/lib/utils/axiosConfig";
 import useChatStore from "@/store/chatStore";
 
 async function loginUser(email, password) {
-    
+    console.log('Login User called');
     try {
+        console.log
         const response = await axios.post('/login', { email, password });
 
         console.log(response.data);

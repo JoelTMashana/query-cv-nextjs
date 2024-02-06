@@ -52,13 +52,10 @@ const LoginForm = () => {
       const onSubmit = async (data) => {
         try {
           const response = await loginUser(data.email, data.password);
-    
           if (!response) return null;
-    
           console.log('Login successful', response);
           router.push('/chat'); 
         
-         
         } catch (error) {
           console.error('Login failed', error);
           if (error.response && error.response.data.detail) {
@@ -80,7 +77,7 @@ const LoginForm = () => {
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5">
                 <Button asChild>
-                  <Link href="/chat" className="text-center">Google</Link>
+                  <Link href="" className="text-center">Google</Link>
                 </Button>
               </div>
               <div className="text-center"> 
