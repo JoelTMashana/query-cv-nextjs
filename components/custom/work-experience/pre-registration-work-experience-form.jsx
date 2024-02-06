@@ -124,12 +124,13 @@ export default  function PreRegistrationWorkExperienceForm() {
             type="button" 
             disabled={experienceCount < 3}
             onClick={hadleTokenGenerationClick}
+            className="ml-5"
           >
             Chat
-          </Button>
+          </Button >
           
           {experienceCount < 3 && (
-            <p>You need to add at least 3 achievements to proceed.</p>
+            <p>{`You need to add ${ 3 - experienceCount} more to proceed.`}</p>
           )}
         </form>
       </Form>
