@@ -18,7 +18,7 @@ const useChatStore = create(persist((set, get) => ({
     const latestGPTMessageId = isGPTMessage ? message.id : state.latestGPTMessageId;
     return {
       messages: [...state.messages, message],
-      // promptCount: state.promptCount + increment,
+      promptCount: state.promptCount + increment,
       latestGPTMessageId: latestGPTMessageId 
       
     };
