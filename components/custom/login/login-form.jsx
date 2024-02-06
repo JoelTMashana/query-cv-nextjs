@@ -74,7 +74,7 @@ const LoginForm = () => {
             <CardDescription>Enter your details to login</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="grid w-full items-center gap-4">
+            {/* <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5">
                 <Button asChild>
                   <Link href="" className="text-center">Google</Link>
@@ -83,7 +83,7 @@ const LoginForm = () => {
               <div className="text-center"> 
                 <span>Or continue with</span>
               </div>
-            </div>
+            </div> */}
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                 {/* Form fields for email and password */}

@@ -93,7 +93,7 @@ const RegistrationForm = () => {
         <CardDescription>Enter your details below to create an account</CardDescription>
       </CardHeader>
       <CardContent><Form {...form}>
-        <div className="grid w-full items-center gap-4">
+        {/* <div className="grid w-full items-center gap-4">
           <div className="flex flex-col space-y-1.5">
             <Button asChild>
               <Link href="/chat" className="text-center">Google</Link>
@@ -102,7 +102,7 @@ const RegistrationForm = () => {
           <div className="text-center"> 
             <span>Or continue with</span>
           </div>
-        </div>
+        </div> */}
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
