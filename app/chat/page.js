@@ -1,6 +1,13 @@
 "use client"
 import MessageInput from "@/components/custom/chatBox/message-input";
 import ChatArea from "@/components/custom/chatBox/chat-box";
+import dynamic from 'next/dynamic';
+
+
+const ChatAreaNoSSR = dynamic(() => import('@/components/custom/chatBox/chat-box'), {
+  ssr: false, 
+});
+
 
 const Page = () => {
   return (
@@ -8,7 +15,7 @@ const Page = () => {
 
       <div className="fixed inset-x-0 bottom-7 w-full flex justify-center">
         <div className=" w-11/12 md:w-5/6 lg:w-5/12 custom-width"> 
-          <ChatArea/>
+          <ChatAreaNoSSR />
           <MessageInput/>
         </div>
       </div>

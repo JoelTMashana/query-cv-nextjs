@@ -9,7 +9,6 @@ import SingleSignOnLoginModal from '../login/SSO-modal';
 import PaperPlaneIcon from '../icons/arrow-up';
 
 const MessageInput = () => {
-  const router = useRouter()
   const [message, setMessage] = useState('');
   const addMessage = useChatStore((state) => state.addMessage);
   const promptCount = useChatStore((state) => state.promptCount);
@@ -24,22 +23,27 @@ const MessageInput = () => {
       console.log(message);
       addMessage({ id: Date.now(), text: message.trim(), sender: 'user' });
       setMessage(''); 
-
-      let response;
-      console.log('is logged in: ', isLoggedIn);
-      if (isLoggedIn) {
-        console.log('User is logged');
-        response = await queryGPTPostRegistration(message);
-      } else {
-        response = await queryGPTPreRegistration(message);
-      }
-
-      console.log(response);
-      if (response && response.gpt_response) addMessage({ id: Date.now() + 1, text: response.gpt_response, sender: 'gpt' });
- 
+  
+      try {
+        let response;
+        console.log('is logged in: ', isLoggedIn);
+        if (isLoggedIn) {
+          console.log('User is logged in');
+          response = await queryGPTPostRegistration(message);
+        } else {
+          response = await queryGPTPreRegistration(message);
+        }
+  
+        console.log(response);
+        if (response && response.gpt_response) {
+          addMessage({ id: Date.now() + 1, text: response.gpt_response, sender: 'gpt' });
+        }
+      } catch (error) {
+        console.error('Error sending message:', error);
+      }  
       if (promptCount > 2) resetPromptCount();
     }
-  };
+  }
   
 
   return (

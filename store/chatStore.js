@@ -3,11 +3,12 @@ import { persist } from 'zustand/middleware';
 
 const useChatStore = create(persist((set, get) => ({
   isLoggedIn: false,
+  isGPTProcessing: false,
+  isLoading: false,
   user: null,
   messages: [],
   promptCount: 0,
   latestGPTMessageId: null,
-  isGPTProcessing: false,
 
   startGPTProcessing: () => set(() => ({ isGPTProcessing: true })),
   stopGPTProcessing: () => set(() => ({ isGPTProcessing: false })),
@@ -24,11 +25,9 @@ const useChatStore = create(persist((set, get) => ({
   }),
 
   resetPromptCount: () => set(() => ({ promptCount: 0 })),
-
   loginUser: (userDetails) => set({ isLoggedIn: true, user: userDetails, promptCount: 0 }),
-
   logoutUser: () => set({ isLoggedIn: false, user: null, messages: [], promptCount: 0 }),
-
+  setLoading: (isLoading) => set(() => ({ isLoading })),
 }), {
   name: 'chat-store', 
   getStorage: () => localStorage, 

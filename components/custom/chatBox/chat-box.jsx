@@ -18,11 +18,11 @@ const ChatArea = () => {
   }, [messages]);
 
   return (
-    <div ref={chatAreaRef} className="chat-area container custom-scroll-height">
-      {messages.map((message) => (
-        <MessageItem key={message.id} message={message} />
-      ))}
-    </div>
+      <div ref={chatAreaRef} className="chat-area container custom-scroll-height">
+        {messages.map((message) => (
+          <MessageItem key={message.id} message={message} />
+        ))}
+      </div>
   );
 }
 

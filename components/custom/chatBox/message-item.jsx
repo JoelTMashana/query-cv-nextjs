@@ -54,7 +54,7 @@ const MessageItem = ({ message }) => {
     } else {
       setTypedText(paragraphs);
     }
-  }, [message.text, message.sender]); 
+  }, [message.text, message.sender, isLatestGPTMessage]); 
 
   const avatarClasses = message.sender === "user" 
     ? "bg-gray-200 mr-4 rounded-full w-8 h-8 flex items-center justify-center" 
