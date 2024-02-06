@@ -41,7 +41,7 @@ const MessageInput = () => {
       } catch (error) {
         console.error('Error sending message:', error);
       }  
-      if (promptCount > 2) resetPromptCount();
+      if (promptCount === 2) resetPromptCount();
     }
   }
   
