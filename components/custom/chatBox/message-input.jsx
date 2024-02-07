@@ -67,7 +67,7 @@ const MessageInput = () => {
     value={message}
     onChange={(e) => setMessage(e.target.value)}
     onKeyPress={(e) => {
-      if (e.key === 'Enter' && !e.shiftKey) { 
+      if (e.key === 'Enter' && !e.shiftKey && !isGPTProcessing) { 
         e.preventDefault();
         handleSendMessage();
       }
