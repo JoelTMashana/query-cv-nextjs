@@ -74,3 +74,10 @@
     @apply bg-background text-foreground;
   }
 }
+
+.light-blue-gradient {
+  background: #0066ff;
+}
+.light-blue-text {
+  color: #0066ff;
+}

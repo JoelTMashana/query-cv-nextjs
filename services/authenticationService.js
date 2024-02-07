@@ -2,8 +2,9 @@ import axios from "@/lib/utils/axiosConfig";
 import useChatStore from "@/store/chatStore";
 
 async function loginUser(email, password) {
-    
+    console.log('Login User called');
     try {
+        console.log
         const response = await axios.post('/login', { email, password });
 
         console.log(response.data);
@@ -17,6 +18,7 @@ async function loginUser(email, password) {
 
 async function logoutUser() {
     try {
+        console.log('Logout User called')
         const response = await axios.post('/logout', {});
         useChatStore.getState().logoutUser();
         window.location.href = '/login'; 
@@ -29,12 +31,7 @@ async function logoutUser() {
 async function getTemporaryAccessTokenForUnregisteredUser () {
     try {
         const response = await axios.post('/users/temporary-token', {});
-        console.log(response.data);
-        if (response.data) {
-            window.location.href = '/chat'; 
-        } else {
-            console.error('An error occured');
-        }
+        return response.data;
     } catch (error) {
         console.error('An error occured:', error);
     }

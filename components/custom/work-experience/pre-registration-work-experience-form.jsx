@@ -17,6 +17,7 @@ import {
 import { Textarea } from "../../ui/textarea";
 import { useEffect, useState } from "react";
 import { getTemporaryAccessTokenForUnregisteredUser } from "@/services/authenticationService";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   position: z.string()
@@ -29,6 +30,7 @@ const formSchema = z.object({
 
 
 export default  function PreRegistrationWorkExperienceForm() {
+  const router = useRouter();
   const [experienceCount, setExperienceCount] = useState(0);
 
   const form = useForm({
@@ -60,9 +62,13 @@ export default  function PreRegistrationWorkExperienceForm() {
     });
   };
 
-  const hadleTokenGenerationClick = () => {
+  const hadleTokenGenerationClick = async () => {
     console.log("Button clicked!");
-    const response = getTemporaryAccessTokenForUnregisteredUser();
+    const response = await  getTemporaryAccessTokenForUnregisteredUser();
+    if (response) {
+      console.log('Response: ', response);
+      router.push('/chat/pre-registration');
+    }
   };
 
   return (
@@ -118,12 +124,13 @@ export default  function PreRegistrationWorkExperienceForm() {
             type="button" 
             disabled={experienceCount < 3}
             onClick={hadleTokenGenerationClick}
+            className="ml-5"
           >
             Chat
-          </Button>
+          </Button >
           
           {experienceCount < 3 && (
-            <p>You need to add at least 3 achievements to proceed.</p>
+            <p>{`You need to add ${ 3 - experienceCount} more to proceed.`}</p>
           )}
         </form>
       </Form>

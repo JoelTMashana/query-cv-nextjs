@@ -1,7 +1,7 @@
 "use client"
 import MessageInput from "@/components/custom/chatBox/message-input";
+// import ChatArea from "@/components/custom/chatBox/chat-box";
 import dynamic from 'next/dynamic';
-
 
 const ChatAreaNoSSR = dynamic(() => import('@/components/custom/chatBox/chat-box'), {
   ssr: false, 
@@ -23,4 +23,3 @@ const Page = () => {
 }
 
 export default Page;
-

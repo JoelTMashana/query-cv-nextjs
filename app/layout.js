@@ -4,6 +4,7 @@ import StickyNavBar from "@/components/custom/navigation/sticky-nav-bar";
 import Footer from "@/components/custom/footer";
 import OnboardingProgressBar from "@/components/custom/onboarding-progress-bar";
 
+
 const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
   title: "Create Next App",

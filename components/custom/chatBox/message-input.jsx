@@ -4,61 +4,90 @@ import { Button } from "@/components/ui/button";
 import TextareaAutosize from 'react-textarea-autosize';
 import { queryGPTPreRegistration, queryGPTPostRegistration } from '@/services/chatService';
 import useChatStore from '@/store/chatStore';
-import { useRouter } from 'next/navigation';
 import SingleSignOnLoginModal from '../login/SSO-modal';
-import ArrowUpIcon from '../icons/arrow-up';
+import PaperPlaneIcon from '../icons/arrow-up';
 
 const MessageInput = () => {
-  const router = useRouter()
   const [message, setMessage] = useState('');
-  const addMessage = useChatStore((state) => state.addMessage);
-  const promptCount = useChatStore((state) => state.promptCount);
-  const resetPromptCount = useChatStore((state) => state.resetPromptCount);
-  const isLoggedIn = useChatStore((state) => state.isLoggedIn);
+  const {
+    addMessage,
+    promptCount,
+    resetPromptCount,
+    isLoggedIn,
+    startGPTProcessing,
+    stopGPTProcessing,
+    isGPTProcessing,
+  } = useChatStore(state => ({
+    addMessage: state.addMessage,
+    promptCount: state.promptCount,
+    resetPromptCount: state.resetPromptCount,
+    isLoggedIn: state.isLoggedIn,
+    startGPTProcessing: state.startGPTProcessing,
+    stopGPTProcessing: state.stopGPTProcessing,
+    isGPTProcessing: state.isGPTProcessing,
+  }));
 
   const handleSendMessage = async () => {
     if (message.trim()) {
       console.log(message);
       addMessage({ id: Date.now(), text: message.trim(), sender: 'user' });
-      setMessage(''); 
-
-      let response;
-      console.log('is logged in: ', isLoggedIn);
-      if (isLoggedIn) {
-        console.log('User is logged');
-        response = await queryGPTPostRegistration(message);
-      } else {
-        response = await queryGPTPreRegistration(message);
+      setMessage('');
+      startGPTProcessing();  
+  
+      try {
+        let response;
+        console.log('is logged in: ', isLoggedIn);
+        if (isLoggedIn) {
+          console.log('User is logged in');
+          response = await queryGPTPostRegistration(message);
+        } else {
+          response = await queryGPTPreRegistration(message);
+        }
+  
+        console.log(response);
+        if (response && response.gpt_response) {
+          addMessage({ id: Date.now() + 1, text: response.gpt_response, sender: 'gpt' });
+        }
+      } catch (error) {
+        console.error('Error sending message:', error);
+      } finally {
+        stopGPTProcessing();
       }
-
-      console.log(response);
-      if (response && response.gpt_response) addMessage({ id: Date.now() + 1, text: response.gpt_response, sender: 'gpt' });
- 
-      if (promptCount > 2) resetPromptCount();
+      if (promptCount === 2) resetPromptCount();
     }
-  };
+  }
   
 
   return (
-    <div className="message-input relative w-11/12 md:w-5/6 lg:w-5/12 first-line:gap-2">
-      <TextareaAutosize
-        placeholder="Type your message here."
-        minRows={2}
-        maxRows={3}
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        className="flex-1 w-full pr-16 border-2 border-gray-300 rounded-md p-2 chat-area"
-      />
-      <div className="absolute bottom-4 right-0 mb-1 mr-5">
-        {promptCount < 2 ? (
-          <Button onClick={handleSendMessage} disabled={!message.trim()}>
-            <ArrowUpIcon className="w-5 h-5"/>
-          </Button>
-        ) : (
-          <SingleSignOnLoginModal />
-        )}
-      </div>
-    </div>
+<div className="relative w-full flex items-center">
+  <TextareaAutosize
+    placeholder="Type your message here."
+    minRows={1}
+    maxRows={3}
+    value={message}
+    onChange={(e) => setMessage(e.target.value)}
+    onKeyPress={(e) => {
+      if (e.key === 'Enter' && !e.shiftKey && !isGPTProcessing) { 
+        e.preventDefault();
+        handleSendMessage();
+      }
+    }}
+    className="w-full border-2 border-gray-300 rounded-2xl p-2 pr-10" 
+  />
+  <div className="absolute inset-y-0 right-3 flex items-center"> 
+    {promptCount < 2 ? (
+      <Button
+        onClick={handleSendMessage}
+        disabled={!message.trim() || isGPTProcessing} 
+        className="p-2 bg-transparent hover:bg-transparent"
+      >
+        <PaperPlaneIcon className="w-5 h-5 text-black"/>
+      </Button>
+    ) : (
+      <SingleSignOnLoginModal />
+    )}
+  </div>
+</div>
   );
   
 };

@@ -25,7 +25,7 @@ import {
 } from "@/components/ui/form";
 import { useRouter } from 'next/navigation';
 import { loginUser } from '@/services/authenticationService';
-
+import Link from 'next/link';
 
 
 const formSchema = z.object({
@@ -52,13 +52,10 @@ const LoginForm = () => {
       const onSubmit = async (data) => {
         try {
           const response = await loginUser(data.email, data.password);
-    
           if (!response) return null;
-    
           console.log('Login successful', response);
           router.push('/chat'); 
         
-         
         } catch (error) {
           console.error('Login failed', error);
           if (error.response && error.response.data.detail) {
@@ -74,9 +71,19 @@ const LoginForm = () => {
         <Card className="w-[350px]">
           <CardHeader>
             <CardTitle>Login</CardTitle>
-            <CardDescription>Description</CardDescription>
+            <CardDescription>Enter your details to login</CardDescription>
           </CardHeader>
           <CardContent>
+            {/* <div className="grid w-full items-center gap-4">
+              <div className="flex flex-col space-y-1.5">
+                <Button asChild>
+                  <Link href="" className="text-center">Google</Link>
+                </Button>
+              </div>
+              <div className="text-center"> 
+                <span>Or continue with</span>
+              </div>
+            </div> */}
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                 {/* Form fields for email and password */}
