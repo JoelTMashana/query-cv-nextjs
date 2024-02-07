@@ -16,7 +16,6 @@ const MessageItem = ({ message }) => {
   const latestGPTMessageId = useChatStore(state => state.latestGPTMessageId);
   const isLatestGPTMessage = message.id === latestGPTMessageId;
 
-  console.log('Paragraphs: ', paragraphs);
   useEffect(() => {
 
     setTypedText([]);
