@@ -15,9 +15,10 @@ import {
 import PaperPlaneIcon from "../icons/arrow-up";
 
 const SingleSignOnLoginModal = () => {
+
   return (
      <Dialog>
-      <DialogTrigger asChild>
+      <DialogTrigger asChild >
       <Button className="p-2 bg-transparent hover:bg-transparent">
         <PaperPlaneIcon className="w-5 h-5 text-black"/>
       </Button>

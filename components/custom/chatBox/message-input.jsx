@@ -4,25 +4,35 @@ import { Button } from "@/components/ui/button";
 import TextareaAutosize from 'react-textarea-autosize';
 import { queryGPTPreRegistration, queryGPTPostRegistration } from '@/services/chatService';
 import useChatStore from '@/store/chatStore';
-import { useRouter } from 'next/navigation';
 import SingleSignOnLoginModal from '../login/SSO-modal';
 import PaperPlaneIcon from '../icons/arrow-up';
 
 const MessageInput = () => {
   const [message, setMessage] = useState('');
-  const addMessage = useChatStore((state) => state.addMessage);
-  const promptCount = useChatStore((state) => state.promptCount);
-  const resetPromptCount = useChatStore((state) => state.resetPromptCount);
-  const isLoggedIn = useChatStore((state) => state.isLoggedIn);
-
-
-
+  const {
+    addMessage,
+    promptCount,
+    resetPromptCount,
+    isLoggedIn,
+    startGPTProcessing,
+    stopGPTProcessing,
+    isGPTProcessing,
+  } = useChatStore(state => ({
+    addMessage: state.addMessage,
+    promptCount: state.promptCount,
+    resetPromptCount: state.resetPromptCount,
+    isLoggedIn: state.isLoggedIn,
+    startGPTProcessing: state.startGPTProcessing,
+    stopGPTProcessing: state.stopGPTProcessing,
+    isGPTProcessing: state.isGPTProcessing,
+  }));
 
   const handleSendMessage = async () => {
     if (message.trim()) {
       console.log(message);
       addMessage({ id: Date.now(), text: message.trim(), sender: 'user' });
-      setMessage(''); 
+      setMessage('');
+      startGPTProcessing();  
   
       try {
         let response;
@@ -40,7 +50,9 @@ const MessageInput = () => {
         }
       } catch (error) {
         console.error('Error sending message:', error);
-      }  
+      } finally {
+        stopGPTProcessing();
+      }
       if (promptCount === 2) resetPromptCount();
     }
   }
@@ -66,7 +78,7 @@ const MessageInput = () => {
     {promptCount < 2 ? (
       <Button
         onClick={handleSendMessage}
-        disabled={!message.trim()}
+        disabled={!message.trim() || isGPTProcessing} 
         className="p-2 bg-transparent hover:bg-transparent"
       >
         <PaperPlaneIcon className="w-5 h-5 text-black"/>
