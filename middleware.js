@@ -16,7 +16,6 @@ export async function middleware(request) {
     if (!tokenExists && (request.nextUrl.pathname.startsWith('/chat') ||
          request.nextUrl.pathname === '/upload-workexperience/manual-entry')) {
             return NextResponse.redirect(new URL('/login', request.url));
-            console.log('User should not be allowed to enter');
     }
 
 
