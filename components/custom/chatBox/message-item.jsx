@@ -1,11 +1,7 @@
 "use client"
 import {
   Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
   CardContent,
-  CardFooter,
 } from "@/components/ui/card";
 import React, { useState, useEffect } from 'react';
 import useChatStore from "@/store/chatStore";

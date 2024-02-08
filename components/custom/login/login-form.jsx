@@ -52,10 +52,12 @@ const LoginForm = () => {
       const onSubmit = async (data) => {
         try {
           const response = await loginUser(data.email, data.password);
+
           if (!response) return null;
           console.log('Login successful', response);
-          router.push('/chat'); 
-        
+
+          if (response.message === "User logged in successfully." )
+                router.push('/chat'); 
         } catch (error) {
           console.error('Login failed', error);
           if (error.response && error.response.data.detail) {
@@ -97,7 +99,7 @@ const LoginForm = () => {
                       <FormControl>
                         <Input placeholder="example@example.com" {...field} {...form.register("email")} />
                       </FormControl>
-                      {emailError && <p>{emailError}</p>} 
+                      {emailError && <p className='text-red-500'>{emailError}</p>} 
                       <FormMessage />
                     </FormItem>
                   )}
