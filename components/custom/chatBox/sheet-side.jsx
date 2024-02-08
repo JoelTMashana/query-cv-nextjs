@@ -42,15 +42,15 @@ export function SheetSide() {
           {isLoggedIn ? (
             <>
               <NavItem href="/manage-work-experience">
-              <PenicilSquareIcon className="w-5 h-5 mr-2" />
+              {/* <PenicilSquareIcon className="w-5 h-5 mr-2" /> */}
                 Manage Work Experience
               </NavItem>
               <NavItem href="/chat">
-              <ChatBubbleIcon className="w-5 h-5 mr-2" />
+              {/* <ChatBubbleIcon className="w-5 h-5 mr-2" /> */}
                 Chat
               </NavItem>
               <NavItem href="/login">
-                <LogoutIcon className="w-5 h-5 mr-2" />
+                {/* <LogoutIcon className="w-5 h-5 mr-2" /> */}
                 Logout
               </NavItem>
             </>
