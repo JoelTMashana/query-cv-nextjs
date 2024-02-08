@@ -62,7 +62,8 @@ const RegistrationForm = () => {
             password: "",
         },
       })
-    
+  
+      
   const onSubmit = async (data) => {
     try {
       const response = await registerUser(data);

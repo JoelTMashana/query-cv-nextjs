@@ -3,7 +3,7 @@ import useChatStore from "@/store/chatStore";
 
 async function loginUser(email, password) {
     console.log('Login User called');
-    try {
+    // try {
         console.log
         const response = await axios.post('/login', { email, password });
 
@@ -11,9 +11,9 @@ async function loginUser(email, password) {
         const userDetails = response.data.user;
         useChatStore.getState().loginUser(userDetails);
         return response.data
-    } catch (error) {
-        console.error('Login failed:', error);
-    }
+    // } catch (error) {
+    //     console.error('Login failed:', error);
+    // }
 }
 
 async function logoutUser() {
