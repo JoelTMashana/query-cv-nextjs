@@ -1,5 +1,6 @@
 "use client"
 import MessageInput from "@/components/custom/chatBox/message-input";
+import WithAuth from "@/hooks/HOCS/protected-page";
 import dynamic from 'next/dynamic';
 
 
@@ -22,5 +23,5 @@ const Page = () => {
   );
 }
 
-export default Page;
+export default WithAuth(Page);
 
