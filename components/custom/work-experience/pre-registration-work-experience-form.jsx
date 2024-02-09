@@ -19,6 +19,7 @@ import { useEffect, useState } from "react";
 import { getTemporaryAccessTokenForUnregisteredUser } from "@/services/authenticationService";
 import { useRouter } from "next/navigation";
 
+
 const formSchema = z.object({
   position: z.string()
     .min(2, "Position must be at least 2 characters."),
@@ -29,7 +30,7 @@ const formSchema = z.object({
 });
 
 
-export default  function PreRegistrationWorkExperienceForm() {
+const PreRegistrationWorkExperienceForm = () => {
   const router = useRouter();
   const [experienceCount, setExperienceCount] = useState(0);
 
@@ -137,3 +138,5 @@ export default  function PreRegistrationWorkExperienceForm() {
   );
 
 }
+
+export default PreRegistrationWorkExperienceForm;
