@@ -21,6 +21,7 @@ import { Controller, useFormContext } from "react-hook-form";
 import { getExperience } from "@/services/workExperienceService"
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
+
 const MultiSelectNoSSR = dynamic(() => import('../multi-select'), {
   ssr: false, // Disable SSR
 });
@@ -43,7 +44,7 @@ const formSchema = z.object({
 });
 
 
-export default  function WorkExperienceForm({experience_id}) {
+const WorkExperienceForm = ({experience_id}) => {
   const router = useRouter();
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -229,3 +230,5 @@ export default  function WorkExperienceForm({experience_id}) {
   );
 
 }
+
+export default WorkExperienceForm;

@@ -5,9 +5,9 @@ import { DataTable } from "@/components/custom/work-experience/data-table/data-t
 import { columns } from "@/components/custom/work-experience/data-table/columns";
 import useChatStore from "@/store/chatStore";
 import axios from "@/lib/utils/axiosConfig";
+import WithAuth from "@/hooks/HOCS/protected-page";
 
-
-export default function Page() {
+const Page = () => {
   const { user } = useChatStore();
   const setExperiences = useWorkExperienceStore((state) => state.setExperiences);
 
@@ -35,3 +35,5 @@ export default function Page() {
     </div>
   );
 }
+
+export default WithAuth(Page);

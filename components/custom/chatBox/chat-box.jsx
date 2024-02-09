@@ -5,7 +5,6 @@ import MessageItem from "./message-item";
 import useChatStore from "@/store/chatStore";
 
 
-
 const ChatArea = () => {
   const messages = useChatStore((state) => state.messages);
   const chatAreaRef = useRef(null);
@@ -26,6 +25,6 @@ const ChatArea = () => {
   );
 }
 
-export default ChatArea
+export default ChatArea;
 
 
